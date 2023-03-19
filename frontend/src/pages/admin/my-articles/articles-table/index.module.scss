@@ -1,0 +1,23 @@
+.table {
+    border-collapse: collapse;
+}
+
+.head-col {
+    padding: 0 12px;
+    text-align: left;
+    user-select: none;
+    cursor: pointer;
+}
+
+.head-row {
+    border-bottom: 1.5px solid #CCC;
+}
+
+.row {
+    border-bottom: 1px solid #CCC;
+}
+
+.col {
+    min-height: 3rem;
+    padding: 0 12px;
+}

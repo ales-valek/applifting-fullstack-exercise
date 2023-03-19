@@ -1,0 +1,34 @@
+.navbar {
+    width: 100%;
+    background-color: #F8F9FA;
+}
+
+.content {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-link {
+    color: blue;
+
+    &.-active {
+        color: red;
+    }
+}
+
+.menu-links-wrapper {
+    display: flex;
+    flex-grow: 1;
+}
+
+.right-links-wrapper {
+    display: flex;
+}
+
+.login-link {
+    display: flex;
+    align-items: center;
+    color: #2B7EFB;
+    text-decoration: none;
+}

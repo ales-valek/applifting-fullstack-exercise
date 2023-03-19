@@ -1,0 +1,42 @@
+.wrapper {
+    display: flex;
+    list-style: none;
+    gap: .25rem;
+}
+
+.item {
+    color: #6C757D;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid #DADADA;
+    text-align: center;
+    line-height: 2.5rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #F8F8F8;
+    }
+
+    &:active {
+        outline: 1px solid #DADADA;
+    }
+
+    &.-active {
+        color: #000000;
+        background-color: #F8F8F8;
+    }
+
+    &.-disabled {
+        display: none;
+    }
+}
+
+.link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.sr-only {
+    display: none;
+}

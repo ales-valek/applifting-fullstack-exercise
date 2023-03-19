@@ -1,9 +1,8 @@
-import { useLayoutEffect, createContext, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createContext, ReactNode, useEffect } from 'react';
 import { useMutation, UseMutateFunction } from '@tanstack/react-query';
 import useLocalStorage from 'use-local-storage';
 
-import { BlogApi } from '../api/applifting-blog';
+import { BlogApi } from 'services/api/applifting-blog';
 
 type AuthContextValue = {
   isLoggedIn: boolean;
@@ -15,43 +14,40 @@ type AuthContextValue = {
   logout: () => void;
 };
 
-const AuthContext = createContext<AuthContextValue>({
+export const AuthContext = createContext<AuthContextValue>({
   isLoggedIn: false,
   login: () => {},
   logout: () => {},
 });
 
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const navigate = useNavigate();
   const [auth, setAuth] = useLocalStorage<
-    { token: string; createdAt: number } | undefined
+    { token: string; validUntil: number } | undefined
   >('auth', undefined);
-  const isLoggedIn =
-    !!auth?.token && Date.now() - auth?.createdAt < 1000 * 60 * 60;
+  const isLoggedIn = !!auth?.token && auth?.validUntil > Date.now();
 
   const logout = () => {
     setAuth(undefined);
-    navigate('/');
   };
 
   const { mutate: login } = useMutation(BlogApi.authentication.login, {
-    onSuccess: () => {
+    onSuccess: ({ access_token, expires_in }) => {
       setAuth({
-        token: '',
-        createdAt: Date.now(),
+        token: `${access_token}`,
+        validUntil: Date.now() + (expires_in ?? 0) * 1000,
       });
     },
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!auth) return;
 
-    if (Date.now() - auth?.createdAt < 1000 * 60 * 60) {
+    if (auth?.validUntil < Date.now()) {
       logout();
       return;
     }
 
-    const tokenInvalidationTime = Date.now() - auth?.createdAt;
+    const tokenInvalidationTime = Date.now() - auth?.validUntil;
     const timeout = setTimeout(() => {}, tokenInvalidationTime);
 
     return () => clearTimeout(timeout);
