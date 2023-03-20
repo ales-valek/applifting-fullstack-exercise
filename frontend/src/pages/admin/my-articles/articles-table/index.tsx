@@ -6,6 +6,8 @@ import { ReactComponent as FilterArrowsSVG } from 'assets/svg/filter-arrows.svg'
 
 import styles from './index.module.scss';
 import ArticleRow from './article-row';
+import Spinner from 'components/spinner';
+import Button from 'components/button';
 
 enum SORT_TYPE {
   ID = 'ID',
@@ -49,7 +51,7 @@ const getSortedArticles = (articles: Article[], type: SORT_TYPE | null) => {
 };
 
 const ArticlesTable = () => {
-  const { data, isLoading, isError, isSuccess } =
+  const { data, isFetching, isError, isSuccess, refetch } =
     BlogApiHooks.articles.useGetAll();
 
   const [sortBy, setSortBy] = useState<SORT_TYPE>(SORT_TYPE.TIME);
@@ -76,39 +78,52 @@ const ArticlesTable = () => {
   };
 
   return (
-    <table className={styles['table']}>
-      <thead>
-        <tr className={styles['head-row']}>
-          <th
-            className={styles['head-col']}
-            onClick={() => changeSorting(SORT_TYPE.ARTICLE_TITLE)}
-          >
-            Article title
-            <FilterArrowsSVG />
-          </th>
-          <th
-            className={styles['head-col']}
-            onClick={() => changeSorting(SORT_TYPE.TIME)}
-          >
-            Last update
-            <FilterArrowsSVG />
-          </th>
-          <th
-            className={styles['head-col']}
-            onClick={() => changeSorting(SORT_TYPE.PEREX)}
-          >
-            Perex
-            <FilterArrowsSVG />
-          </th>
-          <th className={styles['head-col']}>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {articles?.map((article) => (
-          <ArticleRow key={article?.articleId} article={article} />
-        ))}
-      </tbody>
-    </table>
+    <div className={styles['wrapper']}>
+      {(isFetching || isError) && (
+        <div className={styles['overlay']}>
+          {isFetching && <Spinner size="md" />}
+          {isError && (
+            <div>
+              <h3>Unable to load articles</h3>
+              <Button onClick={() => refetch()}>Try load again</Button>
+            </div>
+          )}
+        </div>
+      )}
+      <table className={styles['table']}>
+        <thead>
+          <tr className={styles['head-row']}>
+            <th
+              className={styles['head-col']}
+              onClick={() => changeSorting(SORT_TYPE.ARTICLE_TITLE)}
+            >
+              Article title
+              <FilterArrowsSVG />
+            </th>
+            <th
+              className={styles['head-col']}
+              onClick={() => changeSorting(SORT_TYPE.TIME)}
+            >
+              Last update
+              <FilterArrowsSVG />
+            </th>
+            <th
+              className={styles['head-col']}
+              onClick={() => changeSorting(SORT_TYPE.PEREX)}
+            >
+              Perex
+              <FilterArrowsSVG />
+            </th>
+            <th className={styles['head-col']}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {articles?.map((article) => (
+            <ArticleRow key={article?.articleId} article={article} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

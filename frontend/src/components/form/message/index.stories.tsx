@@ -12,4 +12,5 @@ export const Default = (args: Parameters<typeof Message>[0]) => (
 );
 Default.args = {
   children: 'Message',
+  variant: 'info',
 };

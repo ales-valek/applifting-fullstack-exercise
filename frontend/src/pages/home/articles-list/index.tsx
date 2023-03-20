@@ -5,6 +5,7 @@ import { BlogApiHooks } from 'services/api/applifting-blog';
 
 import styles from './index.module.scss';
 import { getFormatteDateTimeFromTimestamp } from 'helpers/get-formatted-date-time-from-timestamp';
+import Spinner from 'components/spinner';
 
 const LIMIT = 2;
 
@@ -19,20 +20,22 @@ const ArticlesList = () => {
 
   return (
     <div className={styles['container']}>
-      {isLoading
-        ? 'Loading...'
-        : data?.items?.map((article, index) => (
-            <Article
-              articleUrl={`/article/${article?.articleId}`}
-              perex={article?.perex ?? ''}
-              title={article?.title ?? ''}
-              imgId={article?.imageId ?? ''}
-              postDate={getFormatteDateTimeFromTimestamp(
-                article?.createdAt ?? ''
-              )}
-              key={index}
-            />
-          ))}
+      {isLoading ? (
+        <Spinner className={styles['spinner']} size="xl" />
+      ) : (
+        data?.items?.map((article, index) => (
+          <Article
+            articleUrl={`/article/${article?.articleId}`}
+            perex={article?.perex ?? ''}
+            title={article?.title ?? ''}
+            imgId={article?.imageId ?? ''}
+            postDate={getFormatteDateTimeFromTimestamp(
+              article?.createdAt ?? ''
+            )}
+            key={index}
+          />
+        ))
+      )}
       {isError && (
         <div>
           <span>Unable to load</span>

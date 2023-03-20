@@ -1,0 +1,30 @@
+@import 'assets/styles/_variables.scss';
+
+.spinner {
+    fill: $color-primary;
+
+    &.-xs {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    &.-sm {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    &.-md {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    &.-lg {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    &.-xl {
+        width: 5rem;
+        height: 5rem;
+    }
+}

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import Markdown from 'markdown-to-jsx';
 
 import styles from './index.module.scss';
+import Spinner from 'components/spinner';
 
 const MDEditor = lazy(() => import('@uiw/react-md-editor'));
 
@@ -22,7 +23,7 @@ const MdEditor = ({
 }: MdEditorProps) => {
   return (
     <div className={clsx(styles['wrapper'], className)}>
-      <Suspense fallback={'Loading...'}>
+      <Suspense fallback={<Spinner size="lg" />}>
         <MDEditor
           data-color-mode="light"
           preview="edit"
@@ -31,10 +32,10 @@ const MdEditor = ({
           onChange={onChange}
           {...props}
         />
+        <div className={clsx(styles['preview'], previewClassName)}>
+          <Markdown>{value ?? ''}</Markdown>
+        </div>
       </Suspense>
-      <div className={clsx(styles['preview'], previewClassName)}>
-        <Markdown>{value ?? ''}</Markdown>
-      </div>
     </div>
   );
 };

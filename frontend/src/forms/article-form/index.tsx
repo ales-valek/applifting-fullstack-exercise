@@ -1,6 +1,7 @@
 import Button from 'components/button';
 import { Label, Message } from 'components/form';
 import MdEditor from 'components/form/md-editor';
+import Spinner from 'components/spinner';
 import Form from 'features/form';
 import { ChangeEvent, useLayoutEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -24,9 +25,14 @@ const ArticleForm = ({ articleId, onSubmitSuccess }: ArticleFormProps) => {
     articleId: articleId ?? '',
   });
 
-  const { mutateAsync: uploadImage } = BlogApiHooks.images.useUpload();
-  const { mutateAsync: createArticle } = BlogApiHooks.articles.useCreate();
-  const { mutateAsync: updateArticle } = BlogApiHooks.articles.useUpdate();
+  const { mutateAsync: uploadImage, isLoading: isUploadingImage } =
+    BlogApiHooks.images.useUpload();
+  const { mutateAsync: createArticle, isLoading: isCreatingArticle } =
+    BlogApiHooks.articles.useCreate();
+  const { mutateAsync: updateArticle, isLoading: isUpdatingArticle } =
+    BlogApiHooks.articles.useUpdate();
+
+  const isMutating = isUploadingImage || isCreatingArticle || isUpdatingArticle;
 
   const methods = useForm<ArticleFormValues>({
     values: {
@@ -52,7 +58,6 @@ const ArticleForm = ({ articleId, onSubmitSuccess }: ArticleFormProps) => {
   };
 
   const onSubmit = async (formValues: ArticleFormValues) => {
-    console.log(formValues);
     try {
       if (formValues?.featuredImage === null) {
         return setError('featuredImage', { message: 'Image is required' });
@@ -107,12 +112,14 @@ const ArticleForm = ({ articleId, onSubmitSuccess }: ArticleFormProps) => {
   }, [data, isFetched]);
 
   return articleId && isLoading ? (
-    <>Loading...</>
+    <Spinner size="xl" />
   ) : (
     <Form {...methods} onSubmit={handleSubmit(onSubmit)}>
       <div>
         <h1>{`${articleId ? 'Edit' : 'Create'} article`}</h1>
-        <Button type="submit">Publish Article</Button>
+        <Button type="submit" disabled={isMutating}>
+          {isMutating ? <Spinner size="xs" /> : `Publish Article`}
+        </Button>
       </div>
       <Form.InputField
         label="Article title"

@@ -1,3 +1,5 @@
+import Button from 'components/button';
+import Spinner from 'components/spinner';
 import { Link, useParams } from 'react-router-dom';
 import { BlogApiHooks } from 'services/api/applifting-blog';
 
@@ -17,27 +19,30 @@ const RelatedArticles = ({ className }: { className?: string }) => {
     <div className={className}>
       <h2 className={styles['heading']}>Related articles</h2>
       <div className={styles['container']}>
-        {isLoading
-          ? 'Loading...'
-          : items?.map((article) => (
-              <Link
-                key={article?.articleId}
-                to={`/article/${article?.articleId}`}
-                className={styles['article']}
-              >
-                <h3 className={styles['title']}>{article?.title}</h3>
-                <div className={styles['perex']}>{article?.perex}</div>
-              </Link>
-            ))}
+        {isError ? (
+          <div>
+            <p>Articles failed to load</p>
+            <Button onClick={() => refetch()}>Try load again</Button>
+          </div>
+        ) : (
+          <>
+            {isLoading ? (
+              <Spinner size="md" />
+            ) : (
+              items?.map((article) => (
+                <Link
+                  key={article?.articleId}
+                  to={`/article/${article?.articleId}`}
+                  className={styles['article']}
+                >
+                  <h3 className={styles['title']}>{article?.title}</h3>
+                  <div className={styles['perex']}>{article?.perex}</div>
+                </Link>
+              ))
+            )}
+          </>
+        )}
       </div>
-      {isError && (
-        <div>
-          <span>Unable to load</span>
-          <button type="button" onClick={() => refetch()}>
-            Refetch
-          </button>
-        </div>
-      )}
     </div>
   );
 };

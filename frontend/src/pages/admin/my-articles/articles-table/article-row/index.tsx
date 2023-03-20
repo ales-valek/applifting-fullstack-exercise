@@ -8,6 +8,7 @@ import { Article } from 'services/api/applifting-blog/openapi.types';
 import styles from './index.module.scss';
 import { BlogApiHooks } from 'services/api/applifting-blog';
 import { getFormatteDateTimeFromTimestamp } from 'helpers/get-formatted-date-time-from-timestamp';
+import Spinner from 'components/spinner';
 
 const ArticleRow = ({ article }: { article: Article }) => {
   const { mutate: deleteArticle, isLoading: isDeleting } =
@@ -35,7 +36,7 @@ const ArticleRow = ({ article }: { article: Article }) => {
           <PencilSVG />
         </Link>
         <button type="button" onClick={() => onDelete(article)}>
-          {!isDeleting ? <TrashSVG /> : 'Deleting...'}
+          {!isDeleting ? <TrashSVG /> : <Spinner size="xs" />}
         </button>
       </td>
     </tr>
