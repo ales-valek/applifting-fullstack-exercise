@@ -1,6 +1,6 @@
-import MDEditor from '@uiw/react-md-editor';
-
 import BlogImage from 'features/blog/image';
+import { getFormatteDateTimeFromTimestamp } from 'helpers/get-formatted-date-time-from-timestamp';
+import Markdown from 'markdown-to-jsx';
 import { useParams } from 'react-router-dom';
 import { BlogApiHooks } from 'services/api/applifting-blog';
 
@@ -15,14 +15,14 @@ const Detail = ({ className }: { className?: string }) => {
     <div className={className} data-color-mode="light">
       <h1>{data?.title}</h1>
       <div>
-        <span>{data?.createdAt}</span>
+        <span>{getFormatteDateTimeFromTimestamp(data?.createdAt ?? '')}</span>
       </div>
       <BlogImage
         imageId={data?.imageId ?? ''}
         alt={data?.title ?? ''}
         className={styles['image']}
       />
-      <MDEditor.Markdown source={data?.content} />
+      <Markdown>{data?.content ?? ''}</Markdown>
     </div>
   );
 };

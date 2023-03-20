@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 
 import { BlogApiHooks } from 'services/api/applifting-blog';
 import { Article } from 'services/api/applifting-blog/openapi.types';
+import { ReactComponent as FilterArrowsSVG } from 'assets/svg/filter-arrows.svg';
 
 import styles from './index.module.scss';
 import ArticleRow from './article-row';
@@ -83,18 +84,21 @@ const ArticlesTable = () => {
             onClick={() => changeSorting(SORT_TYPE.ARTICLE_TITLE)}
           >
             Article title
+            <FilterArrowsSVG />
           </th>
           <th
             className={styles['head-col']}
             onClick={() => changeSorting(SORT_TYPE.TIME)}
           >
             Last update
+            <FilterArrowsSVG />
           </th>
           <th
             className={styles['head-col']}
             onClick={() => changeSorting(SORT_TYPE.PEREX)}
           >
             Perex
+            <FilterArrowsSVG />
           </th>
           <th className={styles['head-col']}>Actions</th>
         </tr>

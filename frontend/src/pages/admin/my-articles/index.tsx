@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react';
-import { Link } from 'react-router-dom';
 import ArticlesTable from './articles-table';
+import ButtonLink from 'components/button-link';
 
 const MyArticlesPage = () => {
   useLayoutEffect(() => {
@@ -10,7 +10,7 @@ const MyArticlesPage = () => {
     <>
       <div>
         <h1>My articles</h1>
-        <Link to="/admin/articles/create">Create new article</Link>
+        <ButtonLink to="/admin/articles/create">Create new article</ButtonLink>
       </div>
       <div>
         <ArticlesTable />

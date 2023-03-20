@@ -1,3 +1,5 @@
+@import 'assets/styles/_variables.scss';
+
 .wrapper {
     display: flex;
     list-style: none;
@@ -5,25 +7,26 @@
 }
 
 .item {
-    color: #6C757D;
+    color: $color-darker;
+    background-color: $color-white;
     min-width: 2.5rem;
     height: 2.5rem;
-    border: 1px solid #DADADA;
+    border: 1px solid $color-secondary;
     text-align: center;
     line-height: 2.5rem;
     cursor: pointer;
 
     &:hover {
-        background-color: #F8F8F8;
+        background-color: $color-light;
     }
 
     &:active {
-        outline: 1px solid #DADADA;
+        outline: 1px solid $color-darker;
     }
 
     &.-active {
-        color: #000000;
-        background-color: #F8F8F8;
+        color: $color-dark;
+        background-color: $color-light;
     }
 
     &.-disabled {

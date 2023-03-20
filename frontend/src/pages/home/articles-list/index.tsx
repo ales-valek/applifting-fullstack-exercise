@@ -1,9 +1,10 @@
-import Article from 'components/article';
+import Article from 'features/blog/article';
 import Pagination from 'components/pagination';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BlogApiHooks } from 'services/api/applifting-blog';
 
 import styles from './index.module.scss';
+import { getFormatteDateTimeFromTimestamp } from 'helpers/get-formatted-date-time-from-timestamp';
 
 const LIMIT = 2;
 
@@ -26,7 +27,9 @@ const ArticlesList = () => {
               perex={article?.perex ?? ''}
               title={article?.title ?? ''}
               imgId={article?.imageId ?? ''}
-              postDate={article?.createdAt ?? ''}
+              postDate={getFormatteDateTimeFromTimestamp(
+                article?.createdAt ?? ''
+              )}
               key={index}
             />
           ))}

@@ -7,6 +7,7 @@ import { Article } from 'services/api/applifting-blog/openapi.types';
 
 import styles from './index.module.scss';
 import { BlogApiHooks } from 'services/api/applifting-blog';
+import { getFormatteDateTimeFromTimestamp } from 'helpers/get-formatted-date-time-from-timestamp';
 
 const ArticleRow = ({ article }: { article: Article }) => {
   const { mutate: deleteArticle, isLoading: isDeleting } =
@@ -25,7 +26,9 @@ const ArticleRow = ({ article }: { article: Article }) => {
   return (
     <tr key={article?.articleId} className={styles['row']}>
       <td className={styles['col']}>{article?.title}</td>
-      <td className={styles['col']}>{article?.lastUpdatedAt}</td>
+      <td className={styles['col']}>
+        {getFormatteDateTimeFromTimestamp(article?.lastUpdatedAt ?? '')}
+      </td>
       <td className={styles['col']}>{article?.perex}</td>
       <td className={styles['col']}>
         <Link to={`/admin/articles/${article?.articleId}/edit`}>

@@ -8,6 +8,8 @@ import styles from './index.module.scss';
 import { useContext } from 'react';
 import { AuthContext } from 'services/auth';
 import Dropdown from 'components/dropdown';
+import Button from 'components/button';
+import ButtonLink from 'components/button-link';
 
 const NavbarLink = ({ children, className, ...props }: NavLinkProps) => {
   return (
@@ -35,28 +37,44 @@ const Navbar = () => {
         </div>
         <div className={styles['right-links-wrapper']}>
           {!isLoggedIn ? (
-            <>
+            <div>
               <Link className={styles['login-link']} to="/admin">
                 <span>Log in</span>
                 <ArrowSVG className={styles['login-link-arrow']} />
               </Link>
-            </>
+            </div>
           ) : (
             <>
-              <Link to="/admin">My articles</Link>
-              <Link to="/admin/articles/create">Create article</Link>
+              <div className={styles['right-links']}>
+                <Link to="/admin">My articles</Link>
+                <Link to="/admin/articles/create">Create article</Link>
+              </div>
               <Dropdown>
                 <Dropdown.Button>Open</Dropdown.Button>
                 <Dropdown.Menu>
                   {({ close }) => (
-                    <div
-                      onClick={() => {
-                        logout();
-                        close();
-                      }}
-                    >
-                      Log out
-                    </div>
+                    <>
+                      <div className={styles['dropdown-links']}>
+                        <ButtonLink to="/admin" variant="link-primary">
+                          My articles
+                        </ButtonLink>
+                        <ButtonLink
+                          to="/admin/articles/create"
+                          variant="link-primary"
+                        >
+                          Create article
+                        </ButtonLink>
+                      </div>
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          logout();
+                          close();
+                        }}
+                      >
+                        Log out
+                      </Button>
+                    </>
                   )}
                 </Dropdown.Menu>
               </Dropdown>

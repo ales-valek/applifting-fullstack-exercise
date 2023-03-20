@@ -1,5 +1,6 @@
-import BlogImage from 'features/blog/image';
 import { Link } from 'react-router-dom';
+
+import BlogImage from 'features/blog/image';
 
 import styles from './index.module.scss';
 
@@ -11,7 +12,7 @@ type ArticleProps = {
   perex: string;
 };
 
-const Article = ({
+export const Article = ({
   imgId,
   articleUrl,
   title,
@@ -31,7 +32,7 @@ const Article = ({
         <p className={styles['perex']}>{perex}</p>
         <div className={styles['bottom-info-row']}>
           <Link className={styles['link']} to={articleUrl}>
-            Read full
+            Read whole article
           </Link>
         </div>
       </div>

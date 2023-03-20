@@ -2,6 +2,7 @@ import { useContext, useEffect, useLayoutEffect } from 'react';
 import { AuthContext } from 'services/auth';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import Form from 'features/form';
 
 type FormValues = { username: string; password: string };
 
@@ -16,7 +17,7 @@ const LoginForm = () => {
     },
   });
 
-  const { handleSubmit, register } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = (formValues: FormValues) => {
     login(formValues);
@@ -35,13 +36,25 @@ const LoginForm = () => {
   return (
     <div>
       <h1>Log in</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Email</label>
-        <input type="text" {...register('username')} />
-        <label>Password</label>
-        <input type="password" {...register('password')} />
-        <button type="submit">Log in</button>
-      </form>
+      <Form {...methods} onSubmit={handleSubmit(onSubmit)}>
+        <Form.InputField
+          label="Username"
+          name="username"
+          rules={{
+            required: { value: true, message: 'Username is required' },
+            minLength: { value: 3, message: 'Username is required' },
+          }}
+        />
+        <Form.InputField
+          label="Password"
+          name="password"
+          type="password"
+          rules={{
+            required: { value: true, message: 'Password is required' },
+          }}
+        />
+        <Form.Button type="submit">Log in</Form.Button>
+      </Form>
     </div>
   );
 };

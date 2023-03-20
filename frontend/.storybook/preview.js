@@ -1,13 +1,6 @@
 import { MemoryRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnMount: false,
-    },
-  },
-});
+import '../src/assets/styles/index.scss';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -21,10 +14,8 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <QueryClientProvider queryClient={queryClient}>
-      <MemoryRouter initialEntries={['/']}>
-        <Story />
-      </MemoryRouter>
-    </QueryClientProvider>
+    <MemoryRouter initialEntries={['/']}>
+      <Story />
+    </MemoryRouter>
   ),
 ];

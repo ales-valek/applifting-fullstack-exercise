@@ -9,3 +9,18 @@ html {
     padding: 0;
     box-sizing: border-box;
 }
+
+input,
+textarea {
+    font-family: sans-serif;
+}
+
+ul,
+ol {
+    list-style-position: inside;
+
+    ul,
+    ol {
+        margin-left: 1rem;
+    }
+}

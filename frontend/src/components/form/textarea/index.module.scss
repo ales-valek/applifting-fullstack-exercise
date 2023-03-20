@@ -1,0 +1,22 @@
+@import 'assets/styles/_variables.scss';
+
+.textarea {
+    min-height: 3.5rem;
+    padding: .5rem;
+    font-size: 1rem;
+    border: 1.5px solid $color-lighter;
+    border-radius: .25rem;
+    resize: vertical;
+
+    &.-success {
+        border-color: $color-success;
+    }
+
+    &.-error {
+        border-color: $color-danger;
+    }
+
+    @media (min-width: $br-md) {
+        min-height: 2.5rem;
+    }
+}

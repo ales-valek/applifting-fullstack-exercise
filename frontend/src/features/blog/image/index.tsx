@@ -4,7 +4,7 @@ import { BlogApiHooks } from 'services/api/applifting-blog';
 
 import styles from './index.module.scss';
 
-const BlogImage = ({
+export const BlogImage = ({
   imageId,
   alt,
   className,
@@ -16,10 +16,16 @@ const BlogImage = ({
   const { data, isLoading, isError } = BlogApiHooks.images.useGet({ imageId });
 
   if (isLoading || isError) {
-    return <div className={cx(styles['image-placeholder'], className)} />;
+    return <div className={cx(styles['image'], className)} />;
   }
 
-  return <img src={data?.imageUrl} alt={alt} className={className} />;
+  return (
+    <img
+      src={data?.imageUrl}
+      alt={alt}
+      className={cx(styles['image'], className)}
+    />
+  );
 };
 
 export default BlogImage;

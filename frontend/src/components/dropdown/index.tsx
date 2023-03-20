@@ -4,9 +4,12 @@ import {
   createContext,
   ReactNode,
   isValidElement,
+  useRef,
 } from 'react';
+import clsx from 'clsx';
 
 import styles from './index.module.scss';
+import useOnClickOutside from 'use-onclickoutside';
 
 const DropdownContext = createContext({
   isOpen: false,
@@ -15,20 +18,37 @@ const DropdownContext = createContext({
   toggle: () => {},
 });
 
-const DropdownButton = ({ children }: { children: ReactNode }) => {
+export const DropdownButton = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   const { toggle } = useContext(DropdownContext);
 
-  return <div onClick={toggle}>{children}</div>;
+  return (
+    <div
+      role="button"
+      tabIndex={-1}
+      className={clsx(styles['button'], className)}
+      onClick={toggle}
+    >
+      {children}
+    </div>
+  );
 };
 
-const DropdownMenu = ({
+export const DropdownMenu = ({
   children,
+  className,
 }: {
   children: ReactNode | (({ close }: { close: () => void }) => ReactNode);
+  className?: string;
 }) => {
   const { isOpen, close } = useContext(DropdownContext);
   return isOpen ? (
-    <div className={styles['menu']}>
+    <div className={clsx(styles['menu'], className)}>
       {isValidElement(children) || typeof children === 'string'
         ? children
         : typeof children === 'function'
@@ -38,19 +58,28 @@ const DropdownMenu = ({
   ) : null;
 };
 
-const Dropdown = ({ children }: { children: ReactNode }) => {
+export const Dropdown = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const open = () => setIsOpen(true);
+  const close = () => setIsOpen(false);
+  const toggle = () => setIsOpen((isOpen) => !isOpen);
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(wrapperRef, close);
 
   return (
     <DropdownContext.Provider
       value={{
         isOpen,
-        open: () => setIsOpen(true),
-        close: () => setIsOpen(false),
-        toggle: () => setIsOpen((isOpen) => !isOpen),
+        open,
+        close,
+        toggle,
       }}
     >
-      <div className={styles['wrapper']}>{children}</div>
+      <div ref={wrapperRef} className={styles['wrapper']}>
+        {children}
+      </div>
     </DropdownContext.Provider>
   );
 };
