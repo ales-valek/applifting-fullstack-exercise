@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import BlogImage from 'features/blog/image';
 
 import styles from './index.module.scss';
+import ButtonLink from 'components/button-link';
 
 type ArticleProps = {
   imgId: string;
@@ -31,9 +32,13 @@ export const Article = ({
         </div>
         <p className={styles['perex']}>{perex}</p>
         <div className={styles['bottom-info-row']}>
-          <Link className={styles['link']} to={articleUrl}>
+          <ButtonLink
+            className={styles['link']}
+            variant="link-primary"
+            to={articleUrl}
+          >
             Read whole article
-          </Link>
+          </ButtonLink>
         </div>
       </div>
     </div>
