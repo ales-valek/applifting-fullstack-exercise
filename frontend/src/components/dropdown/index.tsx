@@ -30,6 +30,7 @@ export const DropdownButton = ({
 
   return (
     <div
+      aria-label="dropdown"
       role="button"
       tabIndex={-1}
       className={clsx(styles['button'], className)}
