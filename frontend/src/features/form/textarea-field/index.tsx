@@ -19,9 +19,12 @@ const TextareaField = ({ label, ...controllerProps }: TextareaFieldProps) => {
 
   return (
     <div>
-      <Label isRequired={!!controllerProps?.rules?.required}>{label}</Label>
+      <Label id={field?.name} isRequired={!!controllerProps?.rules?.required}>
+        {label}
+      </Label>
       <Textarea
         {...field}
+        aria-labelledby={field?.name}
         aria-invalid={error ? 'true' : 'false'}
         isError={!!error}
       />

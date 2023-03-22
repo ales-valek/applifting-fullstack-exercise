@@ -21,6 +21,7 @@ const DropdownContext = createContext({
 export const DropdownButton = ({
   children,
   className,
+  ...props
 }: {
   children: ReactNode;
   className?: string;
@@ -33,6 +34,7 @@ export const DropdownButton = ({
       tabIndex={-1}
       className={clsx(styles['button'], className)}
       onClick={toggle}
+      {...props}
     >
       {children}
     </div>
@@ -42,20 +44,23 @@ export const DropdownButton = ({
 export const DropdownMenu = ({
   children,
   className,
+  ...props
 }: {
   children: ReactNode | (({ close }: { close: () => void }) => ReactNode);
   className?: string;
 }) => {
   const { isOpen, close } = useContext(DropdownContext);
   return isOpen ? (
-    <div className={clsx(styles['menu'], className)}>
+    <div className={clsx(styles['menu'], className)} {...props}>
       {isValidElement(children) || typeof children === 'string'
         ? children
         : typeof children === 'function'
         ? children({ close })
         : null}
     </div>
-  ) : null;
+  ) : (
+    <></>
+  );
 };
 
 export const Dropdown = ({ children }: { children: ReactNode }) => {

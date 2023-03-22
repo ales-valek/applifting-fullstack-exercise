@@ -1,48 +1,17 @@
-import { Link } from 'react-router-dom';
+import Article from 'components/article';
+import { BlogApiHooks } from 'services/api/applifting-blog';
+import { Article as ArticleModel } from 'services/api/applifting-blog/openapi.types';
 
-import BlogImage from 'features/blog/image';
-
-import styles from './index.module.scss';
-import ButtonLink from 'components/button-link';
-
-type ArticleProps = {
-  imgId: string;
+const BlogArticle = ({
+  imageId,
+  ...props
+}: Required<Omit<ArticleModel, 'articleId' | 'createdAt' | 'lastUpdatedAt'>> & {
   articleUrl: string;
-  title: string;
   postDate: string;
-  perex: string;
+}) => {
+  const { data } = BlogApiHooks.images.useGet({ imageId: imageId! });
+
+  return <Article imageUrl={data?.imageUrl ?? '#'} {...props} />;
 };
 
-export const Article = ({
-  imgId,
-  articleUrl,
-  title,
-  postDate,
-  perex,
-}: ArticleProps) => {
-  return (
-    <div className={styles['wrapper']}>
-      <div className={styles['image-wrapper']}>
-        <BlogImage className={styles['image']} imageId={imgId} alt={title} />
-      </div>
-      <div className={styles['info-wrapper']}>
-        <h2 className={styles['title']}>{title}</h2>
-        <div className={styles['info-row']}>
-          <span className={styles['date']}>{postDate}</span>
-        </div>
-        <p className={styles['perex']}>{perex}</p>
-        <div className={styles['bottom-info-row']}>
-          <ButtonLink
-            className={styles['link']}
-            variant="link-primary"
-            to={articleUrl}
-          >
-            Read whole article
-          </ButtonLink>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Article;
+export default BlogArticle;

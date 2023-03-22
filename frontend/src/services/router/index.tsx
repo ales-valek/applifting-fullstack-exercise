@@ -16,7 +16,7 @@ import MyArticlesPage from 'pages/admin/my-articles';
 import CreateArticlePage from 'pages/admin/create-article';
 import EditArticlePage from 'pages/admin/edit-article';
 import ArticlePage from 'pages/article';
-import LoginForm from 'pages/admin/login-form';
+import LoginPage from 'pages/admin/login';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -57,7 +57,7 @@ const Router = () => {
           children: [
             {
               path: 'login',
-              element: <LoginForm />,
+              element: <LoginPage />,
             },
             {
               path: 'articles',

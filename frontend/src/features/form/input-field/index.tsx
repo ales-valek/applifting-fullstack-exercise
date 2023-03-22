@@ -20,10 +20,13 @@ const InputField = ({ label, type, ...controllerProps }: InputFieldProps) => {
 
   return (
     <div>
-      <Label isRequired={!!controllerProps?.rules?.required}>{label}</Label>
+      <Label id={field?.name} isRequired={!!controllerProps?.rules?.required}>
+        {label}
+      </Label>
       <Input
         {...field}
         type={type}
+        aria-labelledby={field?.name}
         aria-invalid={error ? 'true' : 'false'}
         isError={!!error}
       />

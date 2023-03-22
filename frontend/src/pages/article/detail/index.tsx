@@ -1,7 +1,7 @@
 import Button from 'components/button';
 import Spinner from 'components/spinner';
 import BlogImage from 'features/blog/image';
-import { getFormatteDateTimeFromTimestamp } from 'helpers/get-formatted-date-time-from-timestamp';
+import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
 import Markdown from 'markdown-to-jsx';
 import { useParams } from 'react-router-dom';
 import { BlogApiHooks } from 'services/api/applifting-blog';

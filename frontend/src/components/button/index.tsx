@@ -17,11 +17,17 @@ export const Button = ({
   children,
   className,
   variant = 'primary',
+  disabled,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariants }) => {
   return (
     <button
-      className={clsx(styles['button'], styles[`-${variant}`], className)}
+      className={clsx(
+        styles['button'],
+        styles[`-${variant}`],
+        disabled && styles['-disabled'],
+        className
+      )}
       {...props}
     >
       {children}

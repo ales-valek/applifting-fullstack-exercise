@@ -8,11 +8,20 @@ export const ButtonLink = ({
   children,
   className,
   variant = 'primary',
+  disabled,
+  to,
   ...props
-}: LinkProps & { variant?: ButtonVariants }) => {
+}: LinkProps & { variant?: ButtonVariants; disabled?: boolean }) => {
   return (
     <Link
-      className={clsx(styles['button'], styles[`-${variant}`], className)}
+      aria-disabled={disabled ? 'true' : undefined}
+      className={clsx(
+        styles['button'],
+        styles[`-${variant}`],
+        disabled && styles['-disabled'],
+        className
+      )}
+      to={disabled ? '#' : to}
       {...props}
     >
       {children}

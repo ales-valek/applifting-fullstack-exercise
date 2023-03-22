@@ -1,10 +1,10 @@
-import Article from 'features/blog/article';
+import BlogArticle from 'features/blog/article';
 import Pagination from 'components/pagination';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BlogApiHooks } from 'services/api/applifting-blog';
 
 import styles from './index.module.scss';
-import { getFormatteDateTimeFromTimestamp } from 'helpers/get-formatted-date-time-from-timestamp';
+import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
 import Spinner from 'components/spinner';
 
 const LIMIT = 2;
@@ -24,14 +24,14 @@ const ArticlesList = () => {
         <Spinner className={styles['spinner']} size="xl" />
       ) : (
         data?.items?.map((article, index) => (
-          <Article
+          <BlogArticle
             articleUrl={`/article/${article?.articleId}`}
             perex={article?.perex ?? ''}
             title={article?.title ?? ''}
-            imgId={article?.imageId ?? ''}
-            postDate={getFormatteDateTimeFromTimestamp(
-              article?.createdAt ?? ''
-            )}
+            imageId={article?.imageId ?? ''}
+            postDate={
+              getFormatteDateTimeFromTimestamp(article?.createdAt ?? '') ?? '-'
+            }
             key={index}
           />
         ))

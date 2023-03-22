@@ -8,46 +8,72 @@ import styles from './index.module.scss';
 import ArticleRow from './article-row';
 import Spinner from 'components/spinner';
 import Button from 'components/button';
+import { getSortedArticles } from './helpers';
+import { SORT_ORDER, SORT_TYPE } from './constants';
 
-enum SORT_TYPE {
-  ID = 'ID',
-  TIME = 'TIME',
-  ARTICLE_TITLE = 'ARTICLE_TITLE',
-  PEREX = 'PEREX',
-}
+type ArticleTableUIProps = {
+  articles: Article[];
+  onFilterClick: (type: SORT_TYPE) => void;
+  onRefetchClick: () => void;
+  isLoading?: boolean;
+  isError?: boolean;
+};
 
-enum SORT_ORDER {
-  ASCENDING = 'ASCENDING',
-  DESCENDING = 'DESCENDING',
-}
-
-const getSortedArticles = (articles: Article[], type: SORT_TYPE | null) => {
-  switch (type) {
-    case SORT_TYPE.ID:
-      return articles?.sort((a, b) =>
-        (a?.articleId ?? '').localeCompare(b?.articleId ?? '')
-      );
-    case SORT_TYPE.TIME:
-      return articles?.sort(
-        (a, b) =>
-          new Date(b?.lastUpdatedAt ?? '').getTime() -
-          new Date(a?.lastUpdatedAt ?? '').getTime()
-      );
-    case SORT_TYPE.ARTICLE_TITLE:
-      return articles?.sort((a, b) =>
-        (a?.title?.split(' ')[0] ?? '').localeCompare(
-          b?.title?.split(' ')[0] ?? ''
-        )
-      );
-    case SORT_TYPE.PEREX:
-      return articles?.sort((a, b) =>
-        (a?.perex?.split(' ')[0] ?? '').localeCompare(
-          b?.perex?.split(' ')[0] ?? ''
-        )
-      );
-    default:
-      return articles;
-  }
+export const ArticlesTableUI = ({
+  articles,
+  isLoading,
+  isError,
+  onFilterClick,
+  onRefetchClick,
+}: ArticleTableUIProps) => {
+  return (
+    <div className={styles['wrapper']}>
+      {(isLoading || isError) && (
+        <div className={styles['overlay']} aria-label="overlay">
+          {isLoading && <Spinner size="md" />}
+          {isError && (
+            <div>
+              <h3>Unable to load articles</h3>
+              <Button onClick={onRefetchClick}>Try load again</Button>
+            </div>
+          )}
+        </div>
+      )}
+      <table className={styles['table']}>
+        <thead>
+          <tr className={styles['head-row']}>
+            <th
+              className={styles['head-col']}
+              onClick={() => onFilterClick(SORT_TYPE.ARTICLE_TITLE)}
+            >
+              <span>Article title</span>
+              <FilterArrowsSVG />
+            </th>
+            <th
+              className={styles['head-col']}
+              onClick={() => onFilterClick(SORT_TYPE.TIME)}
+            >
+              <span>Last update</span>
+              <FilterArrowsSVG />
+            </th>
+            <th
+              className={styles['head-col']}
+              onClick={() => onFilterClick(SORT_TYPE.PEREX)}
+            >
+              <span>Perex</span>
+              <FilterArrowsSVG />
+            </th>
+            <th className={styles['head-col']}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {articles?.map((article) => (
+            <ArticleRow key={article?.articleId} article={article} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 const ArticlesTable = () => {
@@ -78,52 +104,13 @@ const ArticlesTable = () => {
   };
 
   return (
-    <div className={styles['wrapper']}>
-      {(isFetching || isError) && (
-        <div className={styles['overlay']}>
-          {isFetching && <Spinner size="md" />}
-          {isError && (
-            <div>
-              <h3>Unable to load articles</h3>
-              <Button onClick={() => refetch()}>Try load again</Button>
-            </div>
-          )}
-        </div>
-      )}
-      <table className={styles['table']}>
-        <thead>
-          <tr className={styles['head-row']}>
-            <th
-              className={styles['head-col']}
-              onClick={() => changeSorting(SORT_TYPE.ARTICLE_TITLE)}
-            >
-              Article title
-              <FilterArrowsSVG />
-            </th>
-            <th
-              className={styles['head-col']}
-              onClick={() => changeSorting(SORT_TYPE.TIME)}
-            >
-              Last update
-              <FilterArrowsSVG />
-            </th>
-            <th
-              className={styles['head-col']}
-              onClick={() => changeSorting(SORT_TYPE.PEREX)}
-            >
-              Perex
-              <FilterArrowsSVG />
-            </th>
-            <th className={styles['head-col']}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {articles?.map((article) => (
-            <ArticleRow key={article?.articleId} article={article} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <ArticlesTableUI
+      articles={articles}
+      isLoading={isFetching}
+      isError={isError}
+      onFilterClick={changeSorting}
+      onRefetchClick={refetch}
+    />
   );
 };
 

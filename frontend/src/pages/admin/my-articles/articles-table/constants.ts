@@ -1,0 +1,11 @@
+export enum SORT_TYPE {
+  ID = 'ID',
+  TIME = 'TIME',
+  ARTICLE_TITLE = 'ARTICLE_TITLE',
+  PEREX = 'PEREX',
+}
+
+export enum SORT_ORDER {
+  ASCENDING = 'ASCENDING',
+  DESCENDING = 'DESCENDING',
+}

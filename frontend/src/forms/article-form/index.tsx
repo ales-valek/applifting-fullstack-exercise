@@ -4,46 +4,49 @@ import MdEditor from 'components/form/md-editor';
 import Spinner from 'components/spinner';
 import Form from 'features/form';
 import { ChangeEvent, useLayoutEffect, useRef } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { BlogApi, BlogApiHooks } from 'services/api/applifting-blog';
-import { Article } from 'services/api/applifting-blog/openapi.types';
+import { Controller, useForm, UseFormReturn } from 'react-hook-form';
 
-type ArticleFormValues = {
+export type ArticleFormValues = {
   title: string;
   perex: string;
   featuredImage: File | null;
   content: string;
 };
 
+type ArticleFormType = 'create' | 'edit';
+
 type ArticleFormProps = {
-  articleId?: string;
-  onSubmitSuccess?: (responseData: Article) => void;
+  type: ArticleFormType;
+  initialTitle?: string;
+  initialPerex?: string;
+  initialFeaturedImage?: File | null;
+  initialContent?: string;
+  onSubmit: (
+    responseData: ArticleFormValues,
+    methods: UseFormReturn<ArticleFormValues, any>
+  ) => void;
+  isMutating?: boolean;
 };
 
-const ArticleForm = ({ articleId, onSubmitSuccess }: ArticleFormProps) => {
-  const { data, isLoading, isFetched } = BlogApiHooks.articles.useGet({
-    articleId: articleId ?? '',
-  });
-
-  const { mutateAsync: uploadImage, isLoading: isUploadingImage } =
-    BlogApiHooks.images.useUpload();
-  const { mutateAsync: createArticle, isLoading: isCreatingArticle } =
-    BlogApiHooks.articles.useCreate();
-  const { mutateAsync: updateArticle, isLoading: isUpdatingArticle } =
-    BlogApiHooks.articles.useUpdate();
-
-  const isMutating = isUploadingImage || isCreatingArticle || isUpdatingArticle;
-
+const ArticleForm = ({
+  type,
+  initialTitle,
+  initialPerex,
+  initialFeaturedImage,
+  initialContent,
+  onSubmit,
+  isMutating,
+}: ArticleFormProps) => {
   const methods = useForm<ArticleFormValues>({
     values: {
-      title: data?.title ?? '',
-      perex: data?.perex ?? '',
-      featuredImage: null,
-      content: data?.content ?? '',
+      title: initialTitle ?? '',
+      perex: initialPerex ?? '',
+      featuredImage: initialFeaturedImage ?? null,
+      content: initialContent ?? '',
     },
   });
 
-  const { control, handleSubmit, setValue, setError } = methods;
+  const { control, handleSubmit, setValue } = methods;
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -57,66 +60,13 @@ const ArticleForm = ({ articleId, onSubmitSuccess }: ArticleFormProps) => {
     }
   };
 
-  const onSubmit = async (formValues: ArticleFormValues) => {
-    try {
-      if (formValues?.featuredImage === null) {
-        return setError('featuredImage', { message: 'Image is required' });
-      }
-      let imageId = data?.imageId!;
-      if (formValues?.featuredImage?.name !== 'original') {
-        const [{ imageId: uploadedImageId }] = await uploadImage({
-          imageFile: formValues?.featuredImage,
-        });
-        imageId = uploadedImageId;
-      }
-
-      let responseData = null;
-
-      if (!articleId) {
-        // Create article
-        responseData = await createArticle({
-          imageId,
-          title: formValues?.title,
-          perex: formValues?.perex,
-          content: formValues?.content,
-        });
-      } else {
-        // Edit article
-        responseData = await updateArticle({
-          articleId: data?.articleId!,
-          imageId,
-          title: formValues?.title,
-          perex: formValues?.perex,
-          content: formValues?.content,
-        });
-      }
-      if (typeof onSubmitSuccess === 'function') {
-        onSubmitSuccess(responseData);
-      }
-    } catch (err) {}
-  };
-
-  useLayoutEffect(() => {
-    if (!isFetched) return;
-
-    if (data?.imageId) {
-      BlogApi.images
-        .get({ imageId: data?.imageId })
-        .then(async ({ imageUrl }) => {
-          const base64 = await fetch(imageUrl);
-          const blob = await base64.blob();
-          const file = new File([blob], 'original', { type: blob?.type });
-          setValue('featuredImage', file);
-        });
-    }
-  }, [data, isFetched]);
-
-  return articleId && isLoading ? (
-    <Spinner size="xl" />
-  ) : (
-    <Form {...methods} onSubmit={handleSubmit(onSubmit)}>
+  return (
+    <Form
+      {...methods}
+      onSubmit={handleSubmit((formValues) => onSubmit(formValues, methods))}
+    >
       <div>
-        <h1>{`${articleId ? 'Edit' : 'Create'} article`}</h1>
+        <h1>{`${type === 'create' ? 'Create' : 'Edit'} article`}</h1>
         <Button type="submit" disabled={isMutating}>
           {isMutating ? <Spinner size="xs" /> : `Publish Article`}
         </Button>
@@ -143,7 +93,7 @@ const ArticleForm = ({ articleId, onSubmitSuccess }: ArticleFormProps) => {
         }}
         render={({ field, fieldState: { error } }) => (
           <>
-            <Label>Featured Image</Label>
+            <Label id={field?.name}>Featured Image</Label>
             <div>
               {field?.value && (
                 <div>
@@ -155,6 +105,8 @@ const ArticleForm = ({ articleId, onSubmitSuccess }: ArticleFormProps) => {
               )}
               <Label htmlFor="file" style={{ cursor: 'pointer' }}>
                 <input
+                  aria-labelledby={field?.name}
+                  name={field?.name}
                   ref={fileInputRef}
                   id="file"
                   type="file"
@@ -207,10 +159,15 @@ const ArticleForm = ({ articleId, onSubmitSuccess }: ArticleFormProps) => {
         }}
         render={({ field, fieldState: { error } }) => (
           <>
-            <Label>Content</Label>
+            <Label id={field?.name} isRequired>
+              Content
+            </Label>
             <MdEditor
               value={field.value}
               onChange={(value) => field.onChange(value)}
+              textareaProps={{
+                'aria-labelledby': field?.name,
+              }}
             />
             {error && <Message variant="error">{error.message}</Message>}
           </>

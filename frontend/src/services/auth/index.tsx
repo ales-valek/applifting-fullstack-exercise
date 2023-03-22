@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect } from 'react';
+import { createContext, ReactNode, useContext, useEffect } from 'react';
 import { useMutation, UseMutateFunction } from '@tanstack/react-query';
 import useLocalStorage from 'use-local-storage';
 
@@ -59,5 +59,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuthService = () => useContext(AuthContext);
 
 export default AuthContextProvider;
