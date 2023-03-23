@@ -1,5 +1,6 @@
 {
   "name": "blog",
+  "homepage": "https://ales-valek.github.io/applifting-fullstack-exercise/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -38,7 +39,9 @@
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!react-markdown)/\" --env=jsdom",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -80,6 +83,7 @@
     "@storybook/react": "^6.5.16",
     "@storybook/testing-library": "^0.0.13",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "gh-pages": "^5.0.0",
     "prop-types": "^15.8.1",
     "sass": "^1.59.3",
     "webpack": "^5.76.2"
