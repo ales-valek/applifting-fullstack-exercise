@@ -1,18 +1,10 @@
-import { createContext, ReactNode, useContext, useEffect } from 'react';
-import { useMutation, UseMutateFunction } from '@tanstack/react-query';
+import { createContext, useContext, useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import useLocalStorage from 'use-local-storage';
 
 import { BlogApi } from 'services/api/applifting-blog';
 
-type AuthContextValue = {
-  isLoggedIn: boolean;
-  login: UseMutateFunction<
-    Awaited<ReturnType<typeof BlogApi['authentication']['login']>>,
-    unknown,
-    Parameters<typeof BlogApi['authentication']['login']>[0]
-  >;
-  logout: () => void;
-};
+import { AuthContextProviderProps, AuthContextValue } from './index.types';
 
 export const AuthContext = createContext<AuthContextValue>({
   isLoggedIn: false,
@@ -20,7 +12,7 @@ export const AuthContext = createContext<AuthContextValue>({
   logout: () => {},
 });
 
-const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [auth, setAuth] = useLocalStorage<
     { token: string; validUntil: number } | undefined
   >('auth', undefined);

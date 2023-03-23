@@ -6,17 +6,24 @@ import {
 
 import AuthContextProvider from 'services/auth';
 
+// Layouts
 import MainLayout from 'layouts/main';
+
+// User pages
 import HomePage from 'pages/home';
-import NotFoundPage from 'pages/not-found';
 import AdminPage from 'pages/admin';
 import AboutPage from 'pages/about';
-import RequireAuth from './require-auth';
+import ArticlePage from 'pages/article';
+import NotFoundPage from 'pages/not-found';
+
+// Admin pages
+import LoginPage from 'pages/admin/login';
 import MyArticlesPage from 'pages/admin/my-articles';
 import CreateArticlePage from 'pages/admin/create-article';
 import EditArticlePage from 'pages/admin/edit-article';
-import ArticlePage from 'pages/article';
-import LoginPage from 'pages/admin/login';
+
+// Utilities
+import RequireAuth from 'features/auth/require-auth';
 
 const Router = () => {
   const router = createBrowserRouter([

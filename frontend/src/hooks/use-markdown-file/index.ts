@@ -1,26 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { getMarkdownFile } from './helpers';
+
 export const useMarkdownFile = (path: string) => {
-  const {
-    data: value,
-    isLoading,
-    isError,
-  } = useQuery(
+  const { data: value, ...fileData } = useQuery(
     ['markdown-file', path],
-    () =>
-      fetch(path)
-        .then((res) => res.text())
-        .then((markdownText) => {
-          if (markdownText?.split('\n')?.[0] === '<!DOCTYPE html>') {
-            throw new Error('File does not exist.');
-          }
-          return markdownText;
-        }),
+    () => getMarkdownFile(path),
     {
       cacheTime: 300_000,
       staleTime: 300_000,
     }
   );
 
-  return { value: value ?? '', isLoading, isError };
+  return { value: value ?? '', ...fileData };
 };

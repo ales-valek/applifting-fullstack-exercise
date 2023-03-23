@@ -1,13 +1,8 @@
-import styles from './index.module.scss';
 import ButtonLink from 'components/button-link';
 
-export type ArticleProps = {
-  imageUrl: string;
-  articleUrl: string;
-  title: string;
-  postDate: string;
-  perex: string;
-};
+import { ArticleProps } from './index.types';
+
+import styles from './index.module.scss';
 
 export const Article = ({
   imageUrl,

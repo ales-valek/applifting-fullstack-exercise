@@ -1,15 +1,8 @@
-import { ReactNode } from 'react';
-import {
-  UseControllerProps,
-  useController,
-  useFormContext,
-} from 'react-hook-form';
-import { Label, Message, Textarea } from 'components/form';
+import { useController, useFormContext } from 'react-hook-form';
 
-type TextareaFieldProps = Omit<UseControllerProps, 'control'> & {
-  label?: ReactNode;
-  className?: string;
-};
+import { TextareaFieldProps } from './index.types';
+
+import { Label, Message, Textarea } from 'components/form';
 
 const TextareaField = ({
   label,

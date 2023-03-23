@@ -1,13 +1,9 @@
 import clsx from 'clsx';
 import { ReactComponent as SpinnerSVG } from 'assets/svg/spinner.svg';
 
+import { SpinnerProps } from './index.types';
+
 import styles from './index.module.scss';
-
-type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-
-type SpinnerProps = Parameters<typeof SpinnerSVG>[0] & {
-  size?: SpinnerSize;
-};
 
 export const Spinner = ({ className, size = 'sm', ...props }: SpinnerProps) => {
   return (

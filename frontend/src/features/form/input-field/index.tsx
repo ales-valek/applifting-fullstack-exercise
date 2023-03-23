@@ -1,15 +1,8 @@
-import { ReactNode } from 'react';
-import { Input, Label, Message } from 'components/form';
-import {
-  UseControllerProps,
-  useController,
-  useFormContext,
-} from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 
-type InputFieldProps = Omit<UseControllerProps, 'control'> & {
-  label?: ReactNode;
-  type?: string;
-};
+import { InputFieldProps } from './index.types';
+
+import { Input, Label, Message } from 'components/form';
 
 const InputField = ({ label, type, ...controllerProps }: InputFieldProps) => {
   const { control } = useFormContext();

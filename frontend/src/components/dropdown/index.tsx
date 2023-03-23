@@ -1,70 +1,16 @@
-import {
-  useState,
-  useContext,
-  createContext,
-  ReactNode,
-  isValidElement,
-  useRef,
-} from 'react';
-import clsx from 'clsx';
-
-import styles from './index.module.scss';
+import { useState, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-const DropdownContext = createContext({
-  isOpen: false,
-  open: () => {},
-  close: () => {},
-  toggle: () => {},
-});
+import { DropdownContext } from './index.context';
 
-export const DropdownButton = ({
-  children,
-  className,
-  ...props
-}: {
-  children: ReactNode;
-  className?: string;
-}) => {
-  const { toggle } = useContext(DropdownContext);
+import DropdownButton from './button';
+import DropdownMenu from './menu';
 
-  return (
-    <div
-      aria-label="dropdown"
-      role="button"
-      tabIndex={-1}
-      className={clsx(styles['button'], className)}
-      onClick={toggle}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-};
+import { DropdownProps } from './index.types';
 
-export const DropdownMenu = ({
-  children,
-  className,
-  ...props
-}: {
-  children: ReactNode | (({ close }: { close: () => void }) => ReactNode);
-  className?: string;
-}) => {
-  const { isOpen, close } = useContext(DropdownContext);
-  return isOpen ? (
-    <div className={clsx(styles['menu'], className)} {...props}>
-      {isValidElement(children) || typeof children === 'string'
-        ? children
-        : typeof children === 'function'
-        ? children({ close })
-        : null}
-    </div>
-  ) : (
-    <></>
-  );
-};
+import styles from './index.module.scss';
 
-export const Dropdown = ({ children }: { children: ReactNode }) => {
+export const Dropdown = ({ children }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = () => setIsOpen(true);

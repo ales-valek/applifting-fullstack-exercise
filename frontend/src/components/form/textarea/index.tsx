@@ -1,12 +1,9 @@
-import { forwardRef, TextareaHTMLAttributes } from 'react';
+import { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import styles from './index.module.scss';
+import { TextareaProps } from './index.types';
 
-type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  isSuccess?: boolean;
-  isError?: boolean;
-};
+import styles from './index.module.scss';
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, isSuccess, isError, ...props }, ref) => {

@@ -1,47 +1,18 @@
 import logoImgPath from 'assets/images/logo.png';
-import clsx from 'clsx';
-import { useMatch } from 'react-router-dom';
-
 import { ReactComponent as ArrowSVG } from 'assets/svg/arrow.svg';
 import { ReactComponent as ArrowStepperSVG } from 'assets/svg/arrow-stepper.svg';
 
-import styles from './index.module.scss';
-import { ReactNode, useContext } from 'react';
-import { AuthContext } from 'services/auth';
+import { useAuthService } from 'services/auth';
+
 import Dropdown from 'components/dropdown';
 import Button from 'components/button';
 import ButtonLink from 'components/button-link';
+import NavbarLink from './navbar-link';
 
-type NavbarLinkProps = {
-  children: ReactNode;
-  className?: string;
-  to: string;
-  match?: string;
-};
-
-const NavbarLink = ({
-  children,
-  className,
-  to,
-  match,
-  ...props
-}: NavbarLinkProps) => {
-  const isActive = useMatch(match ?? to);
-
-  return (
-    <ButtonLink
-      to={to}
-      variant="link-primary"
-      className={clsx(styles['nav-link'], isActive && styles['-active'])}
-      {...props}
-    >
-      {children}
-    </ButtonLink>
-  );
-};
+import styles from './index.module.scss';
 
 const Navbar = () => {
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useAuthService();
 
   return (
     <nav className={styles['navbar']}>

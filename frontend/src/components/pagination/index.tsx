@@ -1,12 +1,11 @@
 import clsx from 'clsx';
 import ReactResponsivePagination from 'react-responsive-pagination';
 
+import { PaginationProps } from './index.types';
+
 import styles from './index.module.scss';
 
-const Pagination = ({
-  className,
-  ...props
-}: Parameters<typeof ReactResponsivePagination>[0]) => {
+const Pagination = ({ className, ...props }: PaginationProps) => {
   return (
     <ReactResponsivePagination
       className={clsx(styles['wrapper'], className)}

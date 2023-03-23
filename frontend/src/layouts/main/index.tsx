@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+
 import Navbar from './navbar';
 
 import styles from './index.module.scss';
-import { useEffect } from 'react';
 
 const MainLayout = () => {
   const location = useLocation();

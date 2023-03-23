@@ -1,12 +1,9 @@
-import { forwardRef, InputHTMLAttributes } from 'react';
+import { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import styles from './index.module.scss';
+import { InputProps } from './index.types';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-  isSuccess?: boolean;
-  isError?: boolean;
-};
+import styles from './index.module.scss';
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ type = 'text', className, isSuccess, isError, ...props }, ref) => {

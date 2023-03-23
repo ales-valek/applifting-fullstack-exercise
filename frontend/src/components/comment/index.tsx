@@ -1,17 +1,10 @@
 import { ReactComponent as ArrowSVG } from 'assets/svg/chevron.svg';
+
 import Spinner from 'components/spinner';
 
-import styles from './index.module.scss';
+import { CommentProps } from './index.types';
 
-type CommentProps = {
-  author: string;
-  postDate: string;
-  content: string;
-  score: number;
-  onVoteUp: () => void;
-  onVoteDown: () => void;
-  isCountChanging?: boolean;
-};
+import styles from './index.module.scss';
 
 const Comment = ({
   author,

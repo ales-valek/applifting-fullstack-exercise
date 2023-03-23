@@ -1,7 +1,8 @@
-import { Link, LinkProps } from 'react-router-dom';
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 
-import { ButtonVariants } from 'components/button';
+import { ButtonLinkProps } from './index.types';
+
 import styles from 'components/button/index.module.scss';
 
 export const ButtonLink = ({
@@ -11,7 +12,7 @@ export const ButtonLink = ({
   disabled,
   to,
   ...props
-}: LinkProps & { variant?: ButtonVariants; disabled?: boolean }) => {
+}: ButtonLinkProps) => {
   return (
     <Link
       aria-disabled={disabled ? 'true' : undefined}

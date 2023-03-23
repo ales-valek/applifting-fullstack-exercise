@@ -2,12 +2,9 @@ import clsx from 'clsx';
 import MDEditor from '@uiw/react-md-editor';
 import Markdown from 'markdown-to-jsx';
 
-import styles from './index.module.scss';
+import { MdEditorProps } from './index.types';
 
-type MdEditorProps = Parameters<typeof MDEditor>[0] & {
-  previewClassName?: string;
-  editorClassName?: string;
-};
+import styles from './index.module.scss';
 
 const MdEditor = ({
   className,

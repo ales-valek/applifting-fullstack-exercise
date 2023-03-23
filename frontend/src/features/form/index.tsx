@@ -1,21 +1,10 @@
-import Button from 'components/button';
-import {
-  FieldValues,
-  FormProvider,
-  FormProviderProps,
-  UseFormWatch,
-} from 'react-hook-form';
+import { FieldValues, FormProvider } from 'react-hook-form';
+
+import { FormProps } from './index.types';
+
 import InputField from './input-field';
 import TextareaField from './textarea-field';
-
-type FormProps<T extends FieldValues = FieldValues> = Omit<
-  FormProviderProps<T>,
-  'watch'
-> & {
-  className?: string;
-  onSubmit: () => void;
-  watch: UseFormWatch<T>;
-};
+import Button from 'components/button';
 
 const Form = <T extends FieldValues>({
   children,

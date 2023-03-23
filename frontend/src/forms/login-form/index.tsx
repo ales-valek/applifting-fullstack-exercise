@@ -1,18 +1,11 @@
-import { useForm, UseFormReturn } from 'react-hook-form';
-import Form from 'features/form';
+import { useForm } from 'react-hook-form';
 
-import styles from './index.module.scss';
+import { LoginFormProps, LoginFormValues } from './index.types';
+
+import Form from 'features/form';
 import Spinner from 'components/spinner';
 
-type LoginFormValues = { username: string; password: string };
-
-type LoginFormProps = {
-  onSubmit: (
-    formValues: LoginFormValues,
-    methods: UseFormReturn<LoginFormValues>
-  ) => void;
-  isLoggingIn?: boolean;
-};
+import styles from './index.module.scss';
 
 const LoginForm = ({ onSubmit, isLoggingIn }: LoginFormProps) => {
   const methods = useForm<LoginFormValues>({

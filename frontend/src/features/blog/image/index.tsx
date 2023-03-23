@@ -2,17 +2,11 @@ import cx from 'clsx';
 
 import { BlogApiHooks } from 'services/api/applifting-blog';
 
+import { BlogImageProps } from './index.types';
+
 import styles from './index.module.scss';
 
-export const BlogImage = ({
-  imageId,
-  alt,
-  className,
-}: {
-  imageId: string;
-  alt: string;
-  className?: string;
-}) => {
+export const BlogImage = ({ imageId, alt, className }: BlogImageProps) => {
   const { data, isLoading, isError } = BlogApiHooks.images.useGet({ imageId });
 
   if (isLoading || isError) {

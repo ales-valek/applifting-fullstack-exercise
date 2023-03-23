@@ -1,6 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { Buffer } from 'buffer';
+import axios from 'axios';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+import { BLOG_API_BASE_URL } from './constants';
 
 import {
   AccessToken,
@@ -9,8 +11,6 @@ import {
   ImageInfo,
   Tenant,
 } from './openapi.types';
-
-export const BLOG_API_BASE_URL = 'https://fullstack.exercise.applifting.cz/';
 
 const apiClient = axios.create({
   baseURL: BLOG_API_BASE_URL,

@@ -3,7 +3,7 @@ import { ComponentMeta } from '@storybook/react';
 import Comment from './';
 
 export default {
-  title: 'Comment',
+  title: 'Features/Blog/Comment',
   argTypes: {
     author: {
       description: "Comment' author",

@@ -1,17 +1,8 @@
-import { ButtonHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
-import styles from './index.module.scss';
+import { ButtonProps } from './index.types';
 
-export type ButtonVariants =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'danger'
-  | 'link-primary'
-  | 'link-secondary'
-  | 'link-success'
-  | 'link-danger';
+import styles from './index.module.scss';
 
 export const Button = ({
   children,
@@ -19,7 +10,7 @@ export const Button = ({
   variant = 'primary',
   disabled,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariants }) => {
+}: ButtonProps) => {
   return (
     <button
       className={clsx(

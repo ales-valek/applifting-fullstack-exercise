@@ -1,11 +1,8 @@
 import clsx from 'clsx';
-import { LabelHTMLAttributes } from 'react';
+
+import { LabelProps } from './index.types';
 
 import styles from './index.module.scss';
-
-type LabelProps = LabelHTMLAttributes<HTMLLabelElement> & {
-  isRequired?: boolean;
-};
 
 const Label = ({ children, className, isRequired, ...props }: LabelProps) => {
   return (
