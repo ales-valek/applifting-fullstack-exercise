@@ -22,8 +22,8 @@ const ArticlePage = () => {
   return (
     <div className={styles['container']}>
       <Detail className={styles['detail']} />
-      <div className={styles['related-articles']}>
-        <RelatedArticles />
+      <div className={styles['related-articles-wrapper']}>
+        <RelatedArticles className={styles['related-articles']} />
       </div>
       <Comments className={styles['comments']} />
     </div>

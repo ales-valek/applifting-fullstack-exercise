@@ -2,26 +2,32 @@
 
 .container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-areas:
+        "detail"
+        "comments"
+        "related-articles";
     gap: 1rem;
 }
 
-.detail {}
+.detail {
+    grid-area: detail;
+}
 
-.related-articles-wrapper {}
+.related-articles-wrapper {
+    grid-area: related-articles;
+}
 
-.related-articles {}
-
-.comments {}
+.comments {
+    grid-area: comments;
+}
 
 @media (min-width: $br-lg) {
     .container {
         grid-template-columns: 1fr 25rem;
+        grid-template-areas:
+            "detail related-articles"
+            "comments related-articles";
     }
-
-    .detail {}
-
-    .related-articles-wrapper {}
 
     .related-articles {
         position: sticky;
@@ -30,8 +36,5 @@
         padding-left: .5rem;
         border-left: 1px solid #CCC;
         height: auto;
-        display: inline-block;
     }
-
-    .comments {}
 }

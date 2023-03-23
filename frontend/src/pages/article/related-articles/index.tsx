@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 const RelatedArticles = ({ className }: { className?: string }) => {
   const { articleId } = useParams();
   const { data, isLoading, isError, refetch } = BlogApiHooks.articles.useGetAll(
-    { limit: 6, offset: 0 }
+    { limit: 8, offset: 0 }
   );
 
   const items = data?.items?.filter(
