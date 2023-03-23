@@ -47,6 +47,14 @@
     }
 }
 
+.perex {
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
 .error-wrapper {
     display: flex;
     flex-direction: column;
