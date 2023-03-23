@@ -8,4 +8,5 @@ export type LoginFormProps = {
     methods: UseFormReturn<LoginFormValues>
   ) => void;
   isLoggingIn?: boolean;
+  isLoginError?: boolean;
 };

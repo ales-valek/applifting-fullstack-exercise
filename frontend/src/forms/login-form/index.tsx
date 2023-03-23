@@ -1,13 +1,15 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { LoginFormProps, LoginFormValues } from './index.types';
 
+import { Message } from 'components/form';
 import Form from 'features/form';
 import Spinner from 'components/spinner';
 
 import styles from './index.module.scss';
 
-const LoginForm = ({ onSubmit, isLoggingIn }: LoginFormProps) => {
+const LoginForm = ({ onSubmit, isLoggingIn, isLoginError }: LoginFormProps) => {
   const methods = useForm<LoginFormValues>({
     defaultValues: {
       username: '',
@@ -15,7 +17,18 @@ const LoginForm = ({ onSubmit, isLoggingIn }: LoginFormProps) => {
     },
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { errors },
+    watch,
+    clearErrors,
+  } = methods;
+
+  const [username, password] = watch(['username', 'password']);
+
+  useEffect(() => {
+    clearErrors('root.serverError');
+  }, [username, password]);
 
   return (
     <Form
@@ -38,6 +51,11 @@ const LoginForm = ({ onSubmit, isLoggingIn }: LoginFormProps) => {
           required: { value: true, message: 'Password is required' },
         }}
       />
+      {errors?.root?.serverError && (
+        <Message variant="error" className={styles['login-error-message']}>
+          {errors?.root?.serverError?.message}
+        </Message>
+      )}
       <Form.Button
         disabled={isLoggingIn}
         className={styles['submit-button']}
