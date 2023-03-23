@@ -1,20 +1,5 @@
 @import 'assets/styles/_variables.scss';
 
-.table {
-    border-collapse: collapse;
-}
-
-.head-col {
-    padding: 0 12px;
-    text-align: left;
-    user-select: none;
-    cursor: pointer;
-}
-
-.head-row {
-    border-bottom: 1.5px solid #CCC;
-}
-
 .row {
     position: relative;
     border-bottom: 1px solid #CCC;

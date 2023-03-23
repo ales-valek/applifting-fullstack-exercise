@@ -3,6 +3,8 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { ArticleFormProps, ArticleFormValues } from './index.types';
 
+import { MAX_FILE_SIZE } from './index.constants';
+
 import { Label, Message } from 'components/form';
 import Button from 'components/button';
 import MdEditor from 'components/form/md-editor';
@@ -29,13 +31,25 @@ const ArticleForm = ({
     },
   });
 
-  const { control, handleSubmit, setValue } = methods;
+  const { control, handleSubmit, setValue, setError } = methods;
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const resetImageField = (shouldValidate: boolean = true) => {
+    setValue('featuredImage', null, { shouldValidate });
+  };
+
   const onImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
-      return setValue('featuredImage', null, { shouldValidate: true });
+      return resetImageField(true);
+    }
+    if (!e.target.files[0].type?.includes('image')) {
+      setError('featuredImage', { message: 'File is not image' });
+      return resetImageField(false);
+    }
+    if (e.target.files[0].size > MAX_FILE_SIZE) {
+      setError('featuredImage', { message: 'File is too big (< 1000kb)' });
+      return resetImageField(false);
     }
     setValue('featuredImage', e.target.files[0], { shouldValidate: true });
     if (fileInputRef?.current) {
@@ -108,6 +122,7 @@ const ArticleForm = ({
                     placeholder="Upload an Image"
                     onChange={onImageUpload}
                     style={{ display: 'none' }}
+                    accept="image/*"
                   />
                   <Button
                     type="button"
