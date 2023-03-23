@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import Button from 'components/button';
 import Spinner from 'components/spinner';
 import { Link, useParams } from 'react-router-dom';
@@ -16,7 +17,7 @@ const RelatedArticles = ({ className }: { className?: string }) => {
   );
 
   return (
-    <div className={className}>
+    <div className={clsx(styles['wrapper'], className)}>
       <h2 className={styles['heading']}>Related articles</h2>
       <div className={styles['container']}>
         {isError ? (
@@ -27,7 +28,9 @@ const RelatedArticles = ({ className }: { className?: string }) => {
         ) : (
           <>
             {isLoading ? (
-              <Spinner size="md" />
+              <div className={styles['spinner-wrapper']}>
+                <Spinner size="md" />
+              </div>
             ) : (
               items?.map((article) => (
                 <Link

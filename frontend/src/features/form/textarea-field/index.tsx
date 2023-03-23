@@ -8,9 +8,14 @@ import { Label, Message, Textarea } from 'components/form';
 
 type TextareaFieldProps = Omit<UseControllerProps, 'control'> & {
   label?: ReactNode;
+  className?: string;
 };
 
-const TextareaField = ({ label, ...controllerProps }: TextareaFieldProps) => {
+const TextareaField = ({
+  label,
+  className,
+  ...controllerProps
+}: TextareaFieldProps) => {
   const { control } = useFormContext();
   const {
     field,
@@ -24,6 +29,7 @@ const TextareaField = ({ label, ...controllerProps }: TextareaFieldProps) => {
       </Label>
       <Textarea
         {...field}
+        className={className}
         aria-labelledby={field?.name}
         aria-invalid={error ? 'true' : 'false'}
         isError={!!error}

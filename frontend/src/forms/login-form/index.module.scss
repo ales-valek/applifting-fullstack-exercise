@@ -1,0 +1,12 @@
+@import 'assets/styles/_variables.scss';
+
+.submit-button {
+    margin-top: .625rem;
+}
+
+.submit-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    fill: $color-light;
+}

@@ -1,0 +1,42 @@
+@import 'assets/styles/_variables.scss';
+
+.heading-wrapper {
+    composes: heading-wrapper from "pages/admin/my-articles/index.module.scss";
+}
+
+.image-upload-button-label {
+    composes: button from "components/button/index.module.scss";
+    composes: -link-primary from "components/button/index.module.scss";
+    margin: 0;
+    padding: 0;
+}
+
+.submit-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    fill: $color-light;
+}
+
+.image-preview {
+    max-width: 100%;
+}
+
+.image-buttons {
+    display: flex;
+    gap: .5rem;
+    justify-content: center;
+    align-items: center;
+
+    @media (min-width: $br-lg) {
+        justify-content: flex-start;
+    }
+}
+
+.perex {
+    width: 100%;
+
+    @media (min-width: $br-lg) {
+        width: calc(50% - .5rem);
+    }
+}

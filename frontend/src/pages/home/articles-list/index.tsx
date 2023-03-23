@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import BlogArticle from 'features/blog/article';
 import Pagination from 'components/pagination';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,10 +7,15 @@ import { BlogApiHooks } from 'services/api/applifting-blog';
 import styles from './index.module.scss';
 import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
 import Spinner from 'components/spinner';
+import clsx from 'clsx';
 
-const LIMIT = 2;
+const LIMIT = 5;
 
-const ArticlesList = () => {
+type ArticlesListProps = {
+  className?: string;
+};
+
+const ArticlesList = ({ className }: ArticlesListProps) => {
   const navigate = useNavigate();
   const { page } = useParams();
   const offset = ((parseInt(page ?? '') || 1) - 1) * LIMIT;
@@ -18,10 +24,20 @@ const ArticlesList = () => {
     { limit: LIMIT, offset }
   );
 
+  const totalPages = Math.ceil(data?.pagination?.total! / LIMIT);
+
+  useEffect(() => {
+    if (pageNum > totalPages) {
+      navigate(`/articles/${totalPages}`, { replace: true });
+    }
+  }, [pageNum, totalPages]);
+
   return (
-    <div className={styles['container']}>
+    <div className={clsx(styles['container'], className)}>
       {isLoading ? (
-        <Spinner className={styles['spinner']} size="xl" />
+        <div className={styles['spinner-wrapper']}>
+          <Spinner size="xl" />
+        </div>
       ) : (
         data?.items?.map((article, index) => (
           <BlogArticle
@@ -45,11 +61,13 @@ const ArticlesList = () => {
         </div>
       )}
       <div className={styles['pagination-wrapper']}>
-        <Pagination
-          current={pageNum}
-          total={Math.ceil(data?.pagination?.total! / LIMIT)}
-          onPageChange={(page) => navigate(`/articles/${page}`)}
-        />
+        <div className={styles['pagination']}>
+          <Pagination
+            current={pageNum}
+            total={totalPages}
+            onPageChange={(page) => navigate(`/articles/${page}`)}
+          />
+        </div>
       </div>
     </div>
   );

@@ -6,6 +6,8 @@ import Form from 'features/form';
 import { ChangeEvent, useLayoutEffect, useRef } from 'react';
 import { Controller, useForm, UseFormReturn } from 'react-hook-form';
 
+import styles from './index.module.scss';
+
 export type ArticleFormValues = {
   title: string;
   perex: string;
@@ -65,10 +67,14 @@ const ArticleForm = ({
       {...methods}
       onSubmit={handleSubmit((formValues) => onSubmit(formValues, methods))}
     >
-      <div>
+      <div className={styles['heading-wrapper']}>
         <h1>{`${type === 'create' ? 'Create' : 'Edit'} article`}</h1>
         <Button type="submit" disabled={isMutating}>
-          {isMutating ? <Spinner size="xs" /> : `Publish Article`}
+          {isMutating ? (
+            <Spinner className={styles['submit-spinner']} size="xs" />
+          ) : (
+            `Publish Article`
+          )}
         </Button>
       </div>
       <Form.InputField
@@ -93,50 +99,60 @@ const ArticleForm = ({
         }}
         render={({ field, fieldState: { error } }) => (
           <>
-            <Label id={field?.name}>Featured Image</Label>
+            <Label id={field?.name} isRequired>
+              Featured Image
+            </Label>
             <div>
               {field?.value && (
                 <div>
                   <img
+                    className={styles['image-preview']}
                     src={field?.value ? URL.createObjectURL(field?.value) : ''}
-                    alt="Uploaded Image"
+                    alt={field?.value?.name}
                   />
                 </div>
               )}
-              <Label htmlFor="file" style={{ cursor: 'pointer' }}>
-                <input
-                  aria-labelledby={field?.name}
-                  name={field?.name}
-                  ref={fileInputRef}
-                  id="file"
-                  type="file"
-                  placeholder="Upload an Image"
-                  onChange={onImageUpload}
-                  style={{ display: 'none' }}
-                />
-                <Button
-                  type="button"
-                  variant={field?.value ? 'link-primary' : 'secondary'}
-                  style={{ pointerEvents: 'none' }}
+              <div className={styles['image-buttons']}>
+                <Label
+                  className={styles['image-upload-button-label']}
+                  htmlFor="file"
+                  style={{ cursor: 'pointer' }}
                 >
-                  {field?.value ? 'Upload new' : 'Upload an image'}
-                </Button>
-              </Label>
+                  <input
+                    aria-labelledby={field?.name}
+                    name={field?.name}
+                    ref={fileInputRef}
+                    id="file"
+                    type="file"
+                    placeholder="Upload an Image"
+                    onChange={onImageUpload}
+                    style={{ display: 'none' }}
+                  />
+                  <Button
+                    type="button"
+                    variant={field?.value ? 'link-primary' : 'secondary'}
+                    style={{ pointerEvents: 'none' }}
+                  >
+                    {field?.value ? 'Upload new' : 'Upload an image'}
+                  </Button>
+                </Label>
+                {field?.value && (
+                  <Button
+                    variant="link-danger"
+                    type="button"
+                    onClick={() => setValue('featuredImage', null)}
+                  >
+                    Delete
+                  </Button>
+                )}
+              </div>
             </div>
-            {field?.value && (
-              <Button
-                variant="link-danger"
-                type="button"
-                onClick={() => setValue('featuredImage', null)}
-              >
-                Delete
-              </Button>
-            )}
             {error && <Message variant="error">{error?.message}</Message>}
           </>
         )}
       />
       <Form.TextareaField
+        className={styles['perex']}
         label="Perex"
         name="perex"
         rules={{

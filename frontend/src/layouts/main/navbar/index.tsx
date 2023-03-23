@@ -1,26 +1,42 @@
 import logoImgPath from 'assets/images/logo.png';
 import clsx from 'clsx';
-import { Link, NavLink, NavLinkProps } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 
 import { ReactComponent as ArrowSVG } from 'assets/svg/arrow.svg';
+import { ReactComponent as ArrowStepperSVG } from 'assets/svg/arrow-stepper.svg';
 
 import styles from './index.module.scss';
-import { useContext } from 'react';
+import { ReactNode, useContext } from 'react';
 import { AuthContext } from 'services/auth';
 import Dropdown from 'components/dropdown';
 import Button from 'components/button';
 import ButtonLink from 'components/button-link';
 
-const NavbarLink = ({ children, className, ...props }: NavLinkProps) => {
+type NavbarLinkProps = {
+  children: ReactNode;
+  className?: string;
+  to: string;
+  match?: string;
+};
+
+const NavbarLink = ({
+  children,
+  className,
+  to,
+  match,
+  ...props
+}: NavbarLinkProps) => {
+  const isActive = useMatch(match ?? to);
+
   return (
-    <NavLink
-      className={({ isActive }) =>
-        clsx(styles['nav-link'], isActive && styles['-active'], className)
-      }
+    <ButtonLink
+      to={to}
+      variant="link-primary"
+      className={clsx(styles['nav-link'], isActive && styles['-active'])}
       {...props}
     >
       {children}
-    </NavLink>
+    </ButtonLink>
   );
 };
 
@@ -32,40 +48,59 @@ const Navbar = () => {
       <div className={styles['content']}>
         <img className={styles['logo']} src={logoImgPath} alt="Logo" />
         <div className={styles['menu-links-wrapper']}>
-          <NavbarLink to="/">Recent articles</NavbarLink>
+          <NavbarLink to="/articles" match="/articles/*">
+            Recent articles
+          </NavbarLink>
           <NavbarLink to="/about">About</NavbarLink>
         </div>
         <div className={styles['right-links-wrapper']}>
           {!isLoggedIn ? (
             <div>
-              <Link className={styles['login-link']} to="/admin">
+              <ButtonLink
+                variant="link-primary"
+                className={styles['login-link']}
+                to="/admin/login"
+              >
                 <span>Log in</span>
                 <ArrowSVG className={styles['login-link-arrow']} />
-              </Link>
+              </ButtonLink>
             </div>
           ) : (
             <>
               <div className={styles['right-links']}>
-                <Link to="/admin">My articles</Link>
-                <Link to="/admin/articles/create">Create article</Link>
+                <NavbarLink to="/admin/articles">My articles</NavbarLink>
+                <NavbarLink to="/admin/articles/create">
+                  Create article
+                </NavbarLink>
               </div>
               <Dropdown>
-                <Dropdown.Button>Open</Dropdown.Button>
-                <Dropdown.Menu>
+                <Dropdown.Button className={styles['dropdown-button']}>
+                  <ArrowStepperSVG className={styles['avatar-arrow']} />
+                  <div className={styles['avatar']}></div>
+                </Dropdown.Button>
+                <Dropdown.Menu className={styles['dropdown-menu']}>
                   {({ close }) => (
                     <>
                       <div className={styles['dropdown-links']}>
-                        <ButtonLink to="/admin" variant="link-primary">
+                        <ButtonLink
+                          className={styles['dropdown-link']}
+                          to="/admin"
+                          variant="link-primary"
+                          onClick={close}
+                        >
                           My articles
                         </ButtonLink>
                         <ButtonLink
+                          className={styles['dropdown-link']}
                           to="/admin/articles/create"
                           variant="link-primary"
+                          onClick={close}
                         >
                           Create article
                         </ButtonLink>
                       </div>
                       <Button
+                        className={styles['dropdown-link']}
                         variant="danger"
                         onClick={() => {
                           logout();

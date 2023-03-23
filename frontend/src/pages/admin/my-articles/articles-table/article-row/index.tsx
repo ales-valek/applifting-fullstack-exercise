@@ -9,6 +9,7 @@ import styles from './index.module.scss';
 import { BlogApiHooks } from 'services/api/applifting-blog';
 import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
 import Spinner from 'components/spinner';
+import clsx from 'clsx';
 
 type ArticleRowUIProps = {
   article: Article;
@@ -27,18 +28,29 @@ export const ArticleRowUI = ({
       <td className={styles['col']}>
         {getFormatteDateTimeFromTimestamp(article?.lastUpdatedAt ?? '')}
       </td>
-      <td className={styles['col']}>{article?.perex}</td>
       <td className={styles['col']}>
-        <Link
-          to={`/admin/articles/${article?.articleId}/edit`}
-          aria-label="edit"
-        >
-          <PencilSVG />
-        </Link>
-        <button type="button" aria-label="delete" onClick={onDelete}>
-          {!isDeleting ? <TrashSVG /> : <Spinner size="xs" />}
-        </button>
+        <div className={styles['perex']}>{article?.perex}</div>
       </td>
+      <td className={styles['col']}>
+        <div className={styles['actions']}>
+          <Link
+            className={clsx(styles['action'], styles['-edit'])}
+            to={`/admin/articles/${article?.articleId}/edit`}
+            aria-label="edit"
+          >
+            <PencilSVG />
+          </Link>
+          <button
+            className={clsx(styles['action'], styles['-delete'])}
+            type="button"
+            aria-label="delete"
+            onClick={onDelete}
+          >
+            {!isDeleting ? <TrashSVG /> : <Spinner size="xs" />}
+          </button>
+        </div>
+      </td>
+      <td>{isDeleting && <div className={styles['loading-overlay']}></div>}</td>
     </tr>
   );
 };

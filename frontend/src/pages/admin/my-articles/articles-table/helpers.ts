@@ -18,9 +18,7 @@ export const getSortedArticles = (
       );
     case SORT_TYPE.ARTICLE_TITLE:
       return articles?.sort((a, b) =>
-        (a?.title?.split(' ')[0] ?? '').localeCompare(
-          b?.title?.split(' ')[0] ?? ''
-        )
+        (a?.title ?? '').localeCompare(b?.title ?? '')
       );
     case SORT_TYPE.PEREX:
       return articles?.sort((a, b) =>

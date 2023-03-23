@@ -24,7 +24,9 @@ const Detail = ({ className }: { className?: string }) => {
   }
 
   return isLoading ? (
-    <Spinner size="xl" className={styles['spinner']} />
+    <div className={styles['spinner-wrapper']}>
+      <Spinner size="xl" className={styles['spinner']} />
+    </div>
   ) : (
     <div className={className} data-color-mode="light">
       <h1>{data?.title}</h1>
@@ -36,7 +38,9 @@ const Detail = ({ className }: { className?: string }) => {
         alt={data?.title ?? ''}
         className={styles['image']}
       />
-      <Markdown>{data?.content ?? ''}</Markdown>
+      <div className={styles['content']}>
+        <Markdown>{data?.content ?? ''}</Markdown>
+      </div>
     </div>
   );
 };

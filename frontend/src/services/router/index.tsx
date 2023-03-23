@@ -31,7 +31,7 @@ const Router = () => {
       children: [
         {
           path: '/',
-          element: <Navigate to="/articles" />,
+          element: <Navigate to="/articles" replace />,
         },
         {
           path: '/articles',

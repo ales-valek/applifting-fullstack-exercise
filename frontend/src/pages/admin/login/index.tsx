@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { AuthContext } from 'services/auth';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from 'forms/login-form';
@@ -7,10 +7,16 @@ type FormValues = { username: string; password: string };
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const { isLoggedIn, login } = useContext(AuthContext);
 
   const onSubmit = (formValues: FormValues) => {
-    login(formValues);
+    setIsLoggingIn(true);
+    login(formValues, {
+      onSettled: () => {
+        setIsLoggingIn(false);
+      },
+    });
   };
 
   useEffect(() => {
@@ -26,7 +32,7 @@ const LoginPage = () => {
   return (
     <div>
       <h1>Log in</h1>
-      <LoginForm onSubmit={onSubmit} />
+      <LoginForm onSubmit={onSubmit} isLoggingIn={isLoggingIn} />
     </div>
   );
 };

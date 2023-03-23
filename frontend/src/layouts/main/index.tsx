@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className={styles['layout-wrapper']}>
       <Navbar />
       <main className={styles['content-wrapper']}>
         <Outlet />

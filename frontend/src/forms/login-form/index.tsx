@@ -1,6 +1,9 @@
 import { useForm, UseFormReturn } from 'react-hook-form';
 import Form from 'features/form';
 
+import styles from './index.module.scss';
+import Spinner from 'components/spinner';
+
 type LoginFormValues = { username: string; password: string };
 
 type LoginFormProps = {
@@ -8,9 +11,10 @@ type LoginFormProps = {
     formValues: LoginFormValues,
     methods: UseFormReturn<LoginFormValues>
   ) => void;
+  isLoggingIn?: boolean;
 };
 
-const LoginForm = ({ onSubmit }: LoginFormProps) => {
+const LoginForm = ({ onSubmit, isLoggingIn }: LoginFormProps) => {
   const methods = useForm<LoginFormValues>({
     defaultValues: {
       username: '',
@@ -41,7 +45,17 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
           required: { value: true, message: 'Password is required' },
         }}
       />
-      <Form.Button type="submit">Log in</Form.Button>
+      <Form.Button
+        disabled={isLoggingIn}
+        className={styles['submit-button']}
+        type="submit"
+      >
+        {isLoggingIn ? (
+          <Spinner className={styles['submit-spinner']} size="xs" />
+        ) : (
+          'Log in'
+        )}
+      </Form.Button>
     </Form>
   );
 };

@@ -5,6 +5,8 @@ import { useMarkdownFile } from 'hooks/use-markdown-file';
 import Spinner from 'components/spinner';
 import { Navigate } from 'react-router-dom';
 
+import styles from './index.module.scss';
+
 const AboutPage = () => {
   const { value, isLoading, isError } = useMarkdownFile(README);
 
@@ -13,11 +15,19 @@ const AboutPage = () => {
   }, []);
 
   if (isError) {
-    return <Navigate to="/404" />;
+    return <Navigate to="/404" replace />;
   }
 
   return (
-    <>{isLoading ? <Spinner size="xl" /> : <Markdown>{value}</Markdown>}</>
+    <>
+      {isLoading ? (
+        <div className={styles['spinner-wrapper']}>
+          <Spinner size="xl" />
+        </div>
+      ) : (
+        <Markdown>{value}</Markdown>
+      )}
+    </>
   );
 };
 

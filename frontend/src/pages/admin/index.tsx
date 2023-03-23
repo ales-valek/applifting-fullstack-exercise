@@ -10,9 +10,9 @@ const AdminPage = () => {
   useEffect(() => {
     if (location.pathname !== '/admin') return;
     if (isLoggedIn) {
-      navigate('/admin/articles', { replace: false });
+      navigate('/admin/articles', { replace: true });
     } else {
-      navigate('/admin/login', { replace: false });
+      navigate('/admin/login', { replace: true });
     }
   }, [isLoggedIn, location]);
 

@@ -47,9 +47,10 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    const tokenInvalidationTime = Date.now() - auth?.validUntil;
+    const tokenInvalidationTime = auth?.validUntil - Date.now();
     const timeout = setTimeout(() => {
-      setAuth(undefined);
+      console.log('logout');
+      logout();
     }, tokenInvalidationTime);
 
     return () => clearTimeout(timeout);

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { BlogApiHooks } from 'services/api/applifting-blog';
 import Spinner from 'components/spinner';
 
+import styles from './index.module.scss';
+
 const ArticleForm = lazy(() => import('forms/article-form'));
 
 const CreateArticlePage = () => {
@@ -40,7 +42,13 @@ const CreateArticlePage = () => {
   };
 
   return (
-    <Suspense fallback={<Spinner size="xl" />}>
+    <Suspense
+      fallback={
+        <div className={styles['spinner-wrapper']}>
+          <Spinner size="xl" />
+        </div>
+      }
+    >
       <ArticleForm
         type="create"
         onSubmit={onSubmit}

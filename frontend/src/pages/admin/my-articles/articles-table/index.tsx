@@ -10,8 +10,10 @@ import Spinner from 'components/spinner';
 import Button from 'components/button';
 import { getSortedArticles } from './helpers';
 import { SORT_ORDER, SORT_TYPE } from './constants';
+import clsx from 'clsx';
 
 type ArticleTableUIProps = {
+  className?: string;
   articles: Article[];
   onFilterClick: (type: SORT_TYPE) => void;
   onRefetchClick: () => void;
@@ -20,6 +22,7 @@ type ArticleTableUIProps = {
 };
 
 export const ArticlesTableUI = ({
+  className,
   articles,
   isLoading,
   isError,
@@ -27,12 +30,12 @@ export const ArticlesTableUI = ({
   onRefetchClick,
 }: ArticleTableUIProps) => {
   return (
-    <div className={styles['wrapper']}>
+    <div className={clsx(styles['wrapper'], className)}>
       {(isLoading || isError) && (
         <div className={styles['overlay']} aria-label="overlay">
-          {isLoading && <Spinner size="md" />}
+          {isLoading && <Spinner size="lg" />}
           {isError && (
-            <div>
+            <div className={styles['refetch-wrapper']}>
               <h3>Unable to load articles</h3>
               <Button onClick={onRefetchClick}>Try load again</Button>
             </div>
@@ -46,24 +49,32 @@ export const ArticlesTableUI = ({
               className={styles['head-col']}
               onClick={() => onFilterClick(SORT_TYPE.ARTICLE_TITLE)}
             >
-              <span>Article title</span>
-              <FilterArrowsSVG />
+              <div className={styles['head-col-content']}>
+                <span>Article title</span>
+                <FilterArrowsSVG />
+              </div>
             </th>
             <th
               className={styles['head-col']}
               onClick={() => onFilterClick(SORT_TYPE.TIME)}
             >
-              <span>Last update</span>
-              <FilterArrowsSVG />
+              <div className={styles['head-col-content']}>
+                <span>Last update</span>
+                <FilterArrowsSVG />
+              </div>
             </th>
             <th
               className={styles['head-col']}
               onClick={() => onFilterClick(SORT_TYPE.PEREX)}
             >
-              <span>Perex</span>
-              <FilterArrowsSVG />
+              <div className={styles['head-col-content']}>
+                <span>Perex</span>
+                <FilterArrowsSVG />
+              </div>
             </th>
-            <th className={styles['head-col']}>Actions</th>
+            <th className={clsx(styles['head-col'], styles['-actions'])}>
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -76,7 +87,11 @@ export const ArticlesTableUI = ({
   );
 };
 
-const ArticlesTable = () => {
+type ArticleTableProps = {
+  className?: string;
+};
+
+const ArticlesTable = ({ className }: ArticleTableProps) => {
   const { data, isFetching, isError, isSuccess, refetch } =
     BlogApiHooks.articles.useGetAll();
 
@@ -105,6 +120,7 @@ const ArticlesTable = () => {
 
   return (
     <ArticlesTableUI
+      className={className}
       articles={articles}
       isLoading={isFetching}
       isError={isError}

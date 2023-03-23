@@ -30,7 +30,8 @@
     }
 
     &.-disabled {
-        display: none;
+        pointer-events: none;
+        background-color: $color-light;
     }
 }
 
