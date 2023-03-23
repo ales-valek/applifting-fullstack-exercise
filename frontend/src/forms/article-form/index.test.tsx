@@ -24,7 +24,7 @@ describe('ArticleForm', () => {
     // eslint-disable-next-line
     await act(async () => {
       await userEvent.type(titleInputEl, 'Title');
-      await userEvent.type(perexInputEl, 'Perex');
+      await userEvent.type(perexInputEl, 'Perex ....');
       await userEvent.upload(imageUploadInputEl, file);
       await userEvent.type(
         contentInputEl,
@@ -34,7 +34,7 @@ describe('ArticleForm', () => {
     });
 
     expect(titleInputEl).toHaveDisplayValue('Title');
-    expect(perexInputEl).toHaveDisplayValue('Perex');
+    expect(perexInputEl).toHaveDisplayValue('Perex ....');
     expect(contentInputEl).toHaveDisplayValue(
       'Very long content containing a lot of information...'
     );
@@ -42,7 +42,7 @@ describe('ArticleForm', () => {
     expect(onSubmit).toBeCalledWith(
       {
         title: 'Title',
-        perex: 'Perex',
+        perex: 'Perex ....',
         featuredImage: file,
         content: 'Very long content containing a lot of information...',
       },
