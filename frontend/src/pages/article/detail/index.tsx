@@ -36,9 +36,9 @@ const Detail = ({ className }: DetailProps) => {
   ) : (
     <div className={className} data-color-mode="light">
       <h1>{data?.title}</h1>
-      <div>
-        <span>{getFormatteDateTimeFromTimestamp(data?.createdAt ?? '')}</span>
-      </div>
+      <span className={styles['date']}>
+        {getFormatteDateTimeFromTimestamp(data?.createdAt ?? '')}
+      </span>
       <BlogImage
         imageId={data?.imageId ?? ''}
         alt={data?.title ?? ''}
