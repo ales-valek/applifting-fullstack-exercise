@@ -6,13 +6,20 @@ import Spinner from 'components/spinner';
 import { UseFormReturn } from 'react-hook-form';
 
 import styles from './index.module.scss';
+import Button from 'components/button';
+import ButtonLink from 'components/button-link';
 
 const ArticleForm = lazy(() => import('forms/article-form'));
 
 const EditArticlePage = () => {
   const { articleId } = useParams();
 
-  const { data: articleData, isLoading } = BlogApiHooks.articles.useGet({
+  const {
+    data: articleData,
+    isLoading,
+    isError,
+    refetch,
+  } = BlogApiHooks.articles.useGet({
     articleId: articleId ?? '',
   });
 
@@ -66,6 +73,20 @@ const EditArticlePage = () => {
     };
     idk();
   }, [imageData]);
+
+  if (isError) {
+    return (
+      <div className={styles['error-wrapper']}>
+        <h3>Article was unable to load.</h3>
+        <div className={styles['error-buttons']}>
+          <Button onClick={() => refetch()}>Try again</Button>
+          <ButtonLink to="/admin/articles" variant="link-primary">
+            Back to my articles
+          </ButtonLink>
+        </div>
+      </div>
+    );
+  }
 
   return isLoading ? (
     <div className={styles['spinner-wrapper']}>

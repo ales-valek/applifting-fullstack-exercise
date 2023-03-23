@@ -2,6 +2,15 @@
     composes: spinner-wrapper from "pages/admin/create-article/index.module.scss";
 }
 
-.md-editor :global(.w-md-editor-toolbar) ul:last-child {
-    display: none;
+.error-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    align-items: center;
+}
+
+.error-buttons {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
 }

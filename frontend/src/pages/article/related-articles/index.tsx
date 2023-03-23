@@ -21,8 +21,8 @@ const RelatedArticles = ({ className }: { className?: string }) => {
       <h2 className={styles['heading']}>Related articles</h2>
       <div className={styles['container']}>
         {isError ? (
-          <div>
-            <p>Articles failed to load</p>
+          <div className={styles['error-wrapper']}>
+            <p>Articles were unable to load.</p>
             <Button onClick={() => refetch()}>Try load again</Button>
           </div>
         ) : (

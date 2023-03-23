@@ -16,8 +16,8 @@ const Detail = ({ className }: { className?: string }) => {
 
   if (isError) {
     return (
-      <div>
-        <h2>Article was unable to load</h2>
+      <div className={styles['error-wrapper']}>
+        <h2>Article was unable to load.</h2>
         <Button onClick={() => refetch()}>Try load again</Button>
       </div>
     );

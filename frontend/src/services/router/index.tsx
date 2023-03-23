@@ -72,13 +72,12 @@ const Router = () => {
                   element: <CreateArticlePage />,
                 },
                 {
-                  path: ':articleId',
-                  children: [
-                    {
-                      path: 'edit',
-                      element: <EditArticlePage />,
-                    },
-                  ],
+                  path: ':articleId/edit',
+                  element: <EditArticlePage />,
+                },
+                {
+                  path: '*',
+                  element: <Navigate to="/admin/articles" />,
                 },
               ],
             },

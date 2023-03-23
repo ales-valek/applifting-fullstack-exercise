@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 const ArticlePage = () => {
   const { articleId } = useParams();
-  const { data, isLoading, isError } = BlogApiHooks.articles.useGet({
+  const { data } = BlogApiHooks.articles.useGet({
     articleId: articleId!,
   });
 

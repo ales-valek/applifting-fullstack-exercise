@@ -1,9 +1,16 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './navbar';
 
 import styles from './index.module.scss';
+import { useEffect } from 'react';
 
 const MainLayout = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    document.body.scrollIntoView({ behavior: 'smooth' });
+  }, [location.pathname]);
+
   return (
     <div className={styles['layout-wrapper']}>
       <Navbar />

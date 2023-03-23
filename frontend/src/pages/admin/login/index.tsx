@@ -3,6 +3,8 @@ import { AuthContext } from 'services/auth';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from 'forms/login-form';
 
+import styles from './index.module.scss';
+
 type FormValues = { username: string; password: string };
 
 const LoginPage = () => {
@@ -30,8 +32,8 @@ const LoginPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Log in</h1>
+    <div className={styles['wrapper']}>
+      <h1 className={styles['heading']}>Log in</h1>
       <LoginForm onSubmit={onSubmit} isLoggingIn={isLoggingIn} />
     </div>
   );
