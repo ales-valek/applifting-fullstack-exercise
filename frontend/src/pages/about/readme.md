@@ -8,8 +8,8 @@ Simple blog application with basic authentication and basic CRUD operations with
 
 ## 🧑 About me
 
-I am a frontend developer with quite a lot of experience with building responsive 📱-💻 and beautiful user interfaces.
-Currently the most experience i have is with TypeScript & React ⚛️, but i worked with other technologies too.
+I am a **frontend developer** with quite a lot of experience with building **responsive** 📱-💻 and beautiful **user interfaces**.
+Currently the most experience i have is with **TypeScript & React** ⚛️, but i worked with other technologies too.
 I usually don't speak very much about myself, so this is probably the end of my long essay. 🤷‍♂️
 
 <br />
@@ -19,7 +19,8 @@ I usually don't speak very much about myself, so this is probably the end of my 
 Author: me (Aleš Válek)
 Worked time: ~3-4 days
 This project is built with a few more libraries than React, that are written down below.
-But what I would like to point out is that this application also uses React Suspense for loading big external libraries like Markdown editor for faster loading and there is also handling for loading and error states.
+But what I would like to point out is that this application also uses **React Suspense** for loading big external libraries like Markdown editor for faster loading and there is also handling for **loading** and **error** states.
+All reusable components can be seen in **Storybook**.
 
 ---
 
