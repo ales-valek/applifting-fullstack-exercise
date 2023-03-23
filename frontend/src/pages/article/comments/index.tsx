@@ -2,9 +2,11 @@ import { useParams } from 'react-router-dom';
 
 import { BlogApiHooks } from 'services/api/applifting-blog';
 
+import { CommentsProps } from './index.types';
+
 import Comment from 'components/comment';
 
-const Comments = ({ className }: { className?: string }) => {
+const Comments = ({ className }: CommentsProps) => {
   const { articleId } = useParams();
   const { data, isError, isLoading } = BlogApiHooks.articles.useGet({
     articleId: articleId!,

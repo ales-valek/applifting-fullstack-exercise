@@ -1,9 +1,11 @@
 import { useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { BlogApiHooks } from 'services/api/applifting-blog';
-import Comments from './comments';
+
 import Detail from './detail';
 import RelatedArticles from './related-articles';
+import Comments from './comments';
 
 import styles from './index.module.scss';
 

@@ -1,13 +1,16 @@
 import { useState, useLayoutEffect, lazy, Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArticleFormValues } from 'forms/article-form';
-import { BlogApiHooks } from 'services/api/applifting-blog';
-import Spinner from 'components/spinner';
 import { UseFormReturn } from 'react-hook-form';
 
-import styles from './index.module.scss';
+import { ArticleFormValues } from 'forms/article-form/index.types';
+
+import { BlogApiHooks } from 'services/api/applifting-blog';
+
+import Spinner from 'components/spinner';
 import Button from 'components/button';
 import ButtonLink from 'components/button-link';
+
+import styles from './index.module.scss';
 
 const ArticleForm = lazy(() => import('forms/article-form'));
 

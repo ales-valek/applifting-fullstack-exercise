@@ -1,8 +1,11 @@
 import { lazy, Suspense } from 'react';
-import { ArticleFormValues } from 'forms/article-form';
 import { UseFormReturn } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+
+import { ArticleFormValues } from 'forms/article-form/index.types';
+
 import { BlogApiHooks } from 'services/api/applifting-blog';
+
 import Spinner from 'components/spinner';
 
 import styles from './index.module.scss';

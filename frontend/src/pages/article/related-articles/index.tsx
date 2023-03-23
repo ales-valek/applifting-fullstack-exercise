@@ -2,14 +2,19 @@ import clsx from 'clsx';
 import Button from 'components/button';
 import Spinner from 'components/spinner';
 import { Link, useParams } from 'react-router-dom';
+
 import { BlogApiHooks } from 'services/api/applifting-blog';
+
+import { NUM_OF_ARTICLES_TO_SHOW } from './index.constants';
+
+import { RelatedArticlesProps } from './index.types';
 
 import styles from './index.module.scss';
 
-const RelatedArticles = ({ className }: { className?: string }) => {
+const RelatedArticles = ({ className }: RelatedArticlesProps) => {
   const { articleId } = useParams();
   const { data, isLoading, isError, refetch } = BlogApiHooks.articles.useGetAll(
-    { limit: 8, offset: 0 }
+    { limit: NUM_OF_ARTICLES_TO_SHOW, offset: 0 }
   );
 
   const items = data?.items?.filter(

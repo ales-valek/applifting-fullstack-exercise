@@ -1,11 +1,13 @@
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
-import { AuthContext } from 'services/auth';
 import { useNavigate } from 'react-router-dom';
+
+import { AuthContext } from 'services/auth';
+
+import { FormValues } from './index.types';
+
 import LoginForm from 'forms/login-form';
 
 import styles from './index.module.scss';
-
-type FormValues = { username: string; password: string };
 
 const LoginPage = () => {
   const navigate = useNavigate();

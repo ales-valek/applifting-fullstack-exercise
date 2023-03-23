@@ -1,0 +1,1 @@
+export const NUM_OF_ARTICLES_TO_SHOW_PER_PAGE = 5;

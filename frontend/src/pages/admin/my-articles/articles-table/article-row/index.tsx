@@ -1,21 +1,19 @@
 import { Link } from 'react-router-dom';
+import clsx from 'clsx';
+
+import { Article } from 'services/api/applifting-blog/openapi.types';
+import { ArticleRowUIProps } from './index.types';
+
+import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
+
+import { BlogApiHooks } from 'services/api/applifting-blog';
 
 import { ReactComponent as PencilSVG } from 'assets/svg/pencil.svg';
 import { ReactComponent as TrashSVG } from 'assets/svg/trash.svg';
 
-import { Article } from 'services/api/applifting-blog/openapi.types';
+import Spinner from 'components/spinner';
 
 import styles from './index.module.scss';
-import { BlogApiHooks } from 'services/api/applifting-blog';
-import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
-import Spinner from 'components/spinner';
-import clsx from 'clsx';
-
-type ArticleRowUIProps = {
-  article: Article;
-  onDelete?: () => void;
-  isDeleting?: boolean;
-};
 
 export const ArticleRowUI = ({
   article,

@@ -1,14 +1,19 @@
-import Button from 'components/button';
-import Spinner from 'components/spinner';
-import BlogImage from 'features/blog/image';
-import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
 import Markdown from 'markdown-to-jsx';
 import { useParams } from 'react-router-dom';
+
+import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
+
 import { BlogApiHooks } from 'services/api/applifting-blog';
+
+import { DetailProps } from './index.types';
+
+import BlogImage from 'features/blog/image';
+import Button from 'components/button';
+import Spinner from 'components/spinner';
 
 import styles from './index.module.scss';
 
-const Detail = ({ className }: { className?: string }) => {
+const Detail = ({ className }: DetailProps) => {
   const { articleId } = useParams();
   const { data, isLoading, isError, refetch } = BlogApiHooks.articles.useGet({
     articleId: articleId!,

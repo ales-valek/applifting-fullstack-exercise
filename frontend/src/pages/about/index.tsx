@@ -1,9 +1,12 @@
 import { useLayoutEffect } from 'react';
-import Markdown from 'markdown-to-jsx';
-import README from './readme.md';
-import { useMarkdownFile } from 'hooks/use-markdown-file';
-import Spinner from 'components/spinner';
 import { Navigate } from 'react-router-dom';
+import Markdown from 'markdown-to-jsx';
+
+import { useMarkdownFile } from 'hooks/use-markdown-file';
+
+import README from './readme.md';
+
+import Spinner from 'components/spinner';
 
 import styles from './index.module.scss';
 

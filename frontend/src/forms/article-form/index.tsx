@@ -1,34 +1,15 @@
-import Button from 'components/button';
+import { ChangeEvent, useRef } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+
+import { ArticleFormProps, ArticleFormValues } from './index.types';
+
 import { Label, Message } from 'components/form';
+import Button from 'components/button';
 import MdEditor from 'components/form/md-editor';
 import Spinner from 'components/spinner';
 import Form from 'features/form';
-import { ChangeEvent, useLayoutEffect, useRef } from 'react';
-import { Controller, useForm, UseFormReturn } from 'react-hook-form';
 
 import styles from './index.module.scss';
-
-export type ArticleFormValues = {
-  title: string;
-  perex: string;
-  featuredImage: File | null;
-  content: string;
-};
-
-type ArticleFormType = 'create' | 'edit';
-
-type ArticleFormProps = {
-  type: ArticleFormType;
-  initialTitle?: string;
-  initialPerex?: string;
-  initialFeaturedImage?: File | null;
-  initialContent?: string;
-  onSubmit: (
-    responseData: ArticleFormValues,
-    methods: UseFormReturn<ArticleFormValues, any>
-  ) => void;
-  isMutating?: boolean;
-};
 
 const ArticleForm = ({
   type,

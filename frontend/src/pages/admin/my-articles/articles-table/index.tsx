@@ -1,25 +1,21 @@
 import { useState, useMemo } from 'react';
+import clsx from 'clsx';
+
+import { ArticleTableUIProps } from './index.types';
+
+import { SORT_ORDER, SORT_TYPE } from './constants';
 
 import { BlogApiHooks } from 'services/api/applifting-blog';
-import { Article } from 'services/api/applifting-blog/openapi.types';
+
+import { getSortedArticles } from './helpers';
+
 import { ReactComponent as FilterArrowsSVG } from 'assets/svg/filter-arrows.svg';
 
-import styles from './index.module.scss';
 import ArticleRow from './article-row';
 import Spinner from 'components/spinner';
 import Button from 'components/button';
-import { getSortedArticles } from './helpers';
-import { SORT_ORDER, SORT_TYPE } from './constants';
-import clsx from 'clsx';
 
-type ArticleTableUIProps = {
-  className?: string;
-  articles: Article[];
-  onFilterClick: (type: SORT_TYPE) => void;
-  onRefetchClick: () => void;
-  isLoading?: boolean;
-  isError?: boolean;
-};
+import styles from './index.module.scss';
 
 export const ArticlesTableUI = ({
   className,

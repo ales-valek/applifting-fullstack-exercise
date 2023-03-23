@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
-import BlogArticle from 'features/blog/article';
-import Pagination from 'components/pagination';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BlogApiHooks } from 'services/api/applifting-blog';
-
-import styles from './index.module.scss';
-import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
-import Spinner from 'components/spinner';
 import clsx from 'clsx';
 
-const LIMIT = 5;
+import { NUM_OF_ARTICLES_TO_SHOW_PER_PAGE as LIMIT } from './index.constants';
 
-type ArticlesListProps = {
-  className?: string;
-};
+import { ArticlesListProps } from './index.types';
+
+import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
+
+import { BlogApiHooks } from 'services/api/applifting-blog';
+
+import Pagination from 'components/pagination';
+import Spinner from 'components/spinner';
+import BlogArticle from 'features/blog/article';
+
+import styles from './index.module.scss';
 
 const ArticlesList = ({ className }: ArticlesListProps) => {
   const navigate = useNavigate();
