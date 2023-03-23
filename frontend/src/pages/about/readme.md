@@ -73,6 +73,12 @@ But what I would like to point out is that this application also uses React Susp
 
 <br />
 
+## ❔ Why those articles are not sorted by publication time?
+
+I also wanted to use pagination functionality with provided API and sorting is present at admin / my articles page.
+
+<br />
+
 ## ❔ Why there is no option to write comments to articles?
 
 There were attempts to make it work with provided API, but all `/comments` endpoints are returning error status 500.
