@@ -3,7 +3,14 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { ArticleFormProps, ArticleFormValues } from './index.types';
 
-import { MAX_FILE_SIZE } from './index.constants';
+import {
+  MAX_FILE_SIZE,
+  TITLE_MIN_CHARACTERS,
+  TITLE_MAX_CHARACTERS,
+  PEREX_MIN_CHARACTERS,
+  PEREX_MAX_CHARACTERS,
+  CONTENT_MIN_CHARACTERS,
+} from './index.constants';
 
 import { Label, Message } from 'components/form';
 import Button from 'components/button';
@@ -78,8 +85,12 @@ const ArticleForm = ({
         rules={{
           required: { value: true, message: 'Title is required' },
           minLength: {
-            value: 3,
-            message: 'Title has to have at least 3 characters',
+            value: TITLE_MIN_CHARACTERS,
+            message: `Title has to have at least ${TITLE_MIN_CHARACTERS} characters`,
+          },
+          maxLength: {
+            value: TITLE_MAX_CHARACTERS,
+            message: `Title is too long, it cannot extend more than ${TITLE_MAX_CHARACTERS} characters`,
           },
         }}
       />
@@ -154,8 +165,12 @@ const ArticleForm = ({
         rules={{
           required: { value: true, message: 'Perex is required' },
           minLength: {
-            value: 3,
-            message: 'Perex has to have at least 3 characters',
+            value: PEREX_MIN_CHARACTERS,
+            message: `Perex has to have at least ${PEREX_MIN_CHARACTERS} characters`,
+          },
+          maxLength: {
+            value: PEREX_MAX_CHARACTERS,
+            message: `Perex is too long, it cannot extend more than ${PEREX_MAX_CHARACTERS} characters`,
           },
         }}
       />
@@ -165,8 +180,8 @@ const ArticleForm = ({
         rules={{
           required: { value: true, message: 'Content is required' },
           minLength: {
-            value: 20,
-            message: 'Content has to have at least 20 characters',
+            value: CONTENT_MIN_CHARACTERS,
+            message: `Content has to have at least ${CONTENT_MIN_CHARACTERS} characters`,
           },
         }}
         render={({ field, fieldState: { error } }) => (

@@ -41,7 +41,11 @@ const CreateArticlePage = () => {
         content: formValues?.content,
       });
       navigate('/admin/articles');
-    } catch (err) {}
+    } catch (err) {
+      alert(
+        'Error occured while creating new article. Please try again later.'
+      );
+    }
   };
 
   return (

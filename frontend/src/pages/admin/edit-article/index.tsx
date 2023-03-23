@@ -63,7 +63,9 @@ const EditArticlePage = () => {
         content: formValues?.content,
       });
       navigate('/admin/articles');
-    } catch (err) {}
+    } catch (err) {
+      alert('Error occured while editing article. Please try again later.');
+    }
   };
 
   useLayoutEffect(() => {
