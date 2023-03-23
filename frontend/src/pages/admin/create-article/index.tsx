@@ -34,6 +34,8 @@ const CreateArticlePage = () => {
         imageFile: formValues?.featuredImage,
       });
 
+      if (!imageId) throw new Error('Image could not be uploaded');
+
       await createArticle({
         imageId,
         title: formValues?.title,

@@ -1,1 +1,1 @@
-export const NUM_OF_ARTICLES_TO_SHOW = 8;
+export const NUM_OF_ARTICLES_TO_SHOW = 5;

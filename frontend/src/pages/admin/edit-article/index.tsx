@@ -52,6 +52,7 @@ const EditArticlePage = () => {
         const [{ imageId: uploadedImageId }] = await uploadImage({
           imageFile: formValues?.featuredImage,
         });
+        if (!uploadedImageId) throw new Error('Image could not be uploaded');
         imageId = uploadedImageId;
       }
 
