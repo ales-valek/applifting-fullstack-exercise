@@ -28,7 +28,9 @@ const AboutPage = () => {
           <Spinner size="xl" />
         </div>
       ) : (
-        <Markdown>{value}</Markdown>
+        <div className="markdown-content">
+          <Markdown>{value}</Markdown>
+        </div>
       )}
     </>
   );

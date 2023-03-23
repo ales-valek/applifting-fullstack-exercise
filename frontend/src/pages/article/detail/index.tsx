@@ -1,5 +1,6 @@
-import Markdown from 'markdown-to-jsx';
 import { useParams } from 'react-router-dom';
+import Markdown from 'markdown-to-jsx';
+import clsx from 'clsx';
 
 import { getFormatteDateTimeFromTimestamp } from 'helpers/getFormatteDateTimeFromTimestamp';
 
@@ -43,7 +44,7 @@ const Detail = ({ className }: DetailProps) => {
         alt={data?.title ?? ''}
         className={styles['image']}
       />
-      <div className={styles['content']}>
+      <div className={clsx(styles['content'], 'markdown-content')}>
         <Markdown>{data?.content ?? ''}</Markdown>
       </div>
     </div>

@@ -24,7 +24,13 @@ const MdEditor = ({
         onChange={onChange}
         {...props}
       />
-      <div className={clsx(styles['preview'], previewClassName)}>
+      <div
+        className={clsx(
+          styles['preview'],
+          'markdown-content',
+          previewClassName
+        )}
+      >
         <Markdown>{value ?? ''}</Markdown>
       </div>
     </div>
