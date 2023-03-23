@@ -9,8 +9,8 @@ describe('Article mutation', () => {
     // Login
     cy.visit('http://localhost:3000');
     cy.findByText(/log in/i).click();
-    cy.findByLabelText(/username/i).type('Aleš Válek');
-    cy.findByLabelText(/password/i).type('abc123');
+    cy.findByLabelText(/username/i).type(Cypress.env('username'));
+    cy.findByLabelText(/password/i).type(Cypress.env('password'));
     cy.findByRole('button', { name: /log in/i }).click();
 
     // See articles
