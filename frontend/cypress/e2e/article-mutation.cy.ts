@@ -27,7 +27,7 @@ describe('Article mutation', () => {
     cy.get('label[for="file"]')
       .click()
       .selectFile('./cypress/fixtures/article-image.jpg');
-    cy.get('textarea[aria-labelledby="perex"]').type('Perex #1');
+    cy.get('textarea[aria-labelledby="perex"]').type('Perex #1 ...');
     cy.get('textarea[aria-labelledby="content"]').type(
       'Very long article content...'
     );
